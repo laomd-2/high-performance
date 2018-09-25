@@ -1,0 +1,3 @@
+D:/learning/high-performance-computing/lab2/Trap/cmake-build-debug/CMakeFiles/Trap.dir
+D:/learning/high-performance-computing/lab2/Trap/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/learning/high-performance-computing/lab2/Trap/cmake-build-debug/CMakeFiles/rebuild_cache.dir
