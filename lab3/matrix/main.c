@@ -2,90 +2,30 @@
 #include <string.h>
 #include <stdlib.h>
 #include <mpi.h>
+#include "matrix_io.h"
+#include "matrix.h"
+#include "send_recv.h"
 
-void mat_vect_mult(
-        const double local_A[],
-        const double x[],
-        double local_y[],
-        int local_m,
-        int n
-        ) {
-    int local_i, j;
-
-    for (local_i = 0; local_i < local_m; local_i++) {
-        local_y[local_i] = 0;
-        for (j = 0; j < n; j++) {
-            local_y[local_i] += local_A[local_i*n+j] * x[j];
-        }
-    }
-}
-
-int pos_x = 0, pos_y = 0;
-double entry = 0;
-void read_matrix(FILE* file, double *arr, int m, int n, int end, int* cnt) {
-    memset(arr, m * n * sizeof(double), 0);
-    if (pos_x) {
-        int i = (pos_y - 1) % m, j = (pos_x - 1) % n;
-        arr[i * n + j] = entry;
-    }
-
-    while ((*cnt)--) {
-        if(fscanf(file, "%d %d %lf", &pos_x, &pos_y, &entry) == EOF)
-            break;
-        if (pos_y > end)
-            break;
-        int i = (pos_y - 1) % m, j = (pos_x - 1) % n;
-        arr[i * n + j] = entry;
-    }
-}
-
-void divide(FILE* file, int m, int n, int cnt, int comm_size, double **local_A, int *local_m) {
+void distribute(FILE *file, int m, int n, int comm_size, double **local_A, int *local_m) {
     int tmp_m;
     int remain = m % comm_size;
-    int i;
-    MPI_Request request;
 
     double *tmp_A = NULL;
 
-    int end = 1;
-
+    int i, end = 1;
     for (i = 0; i < comm_size; i++) {
         tmp_m = m / comm_size;
         tmp_m += i < remain;
         end += tmp_m;
+        send_or_copy(&tmp_m, local_m, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
         if (i == 0) {
-            *local_m = tmp_m;
             *local_A = malloc(tmp_m * n * sizeof(double));
-        } else {
-            MPI_Isend(&tmp_m, 1, MPI_INT, i, 0, MPI_COMM_WORLD, &request);
         }
         if (tmp_A == NULL) {
             tmp_A = malloc(tmp_m * n * sizeof(double));
         }
-        read_matrix(file, tmp_A, tmp_m, n, end, &cnt);
-        if (i == 0) {
-            memcpy(*local_A, tmp_A, tmp_m * n * sizeof(double));
-        } else {
-            MPI_Isend(tmp_A, tmp_m * n, MPI_DOUBLE, i, 0, MPI_COMM_WORLD, &request);
-        }
-    }
-}
-
-void recv_divide(int *local_m, double **local_A, int n) {
-    MPI_Recv(local_m, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    *local_A = malloc(*local_m * n * sizeof(double));
-    MPI_Recv(*local_A, *local_m * n, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-}
-
-int num_nonzero = 0;
-void output(FILE* out, double *arr, int n, int rank) {
-    int i;
-    int base = n * rank + 1;
-    for (i = 0; i < n; ++i) {
-        if (arr[i]) {
-            fprintf(out, "%d\t1\t%lf\n", base + i, arr[i]);
-            num_nonzero++;
-        }
+        read_matrix(file, tmp_A, tmp_m, n, end);
+        send_or_copy(tmp_A, *local_A, tmp_m * n, MPI_DOUBLE, i, 0, MPI_COMM_WORLD);
     }
 }
 
@@ -114,7 +54,7 @@ int main() {
     x = malloc(n * sizeof(double));
     if (rank == 0) {
         if (vector) {
-            read_matrix(vector, x, 1, n, n, &num_x);
+            read_matrix(vector, x, 1, n, n);
         }
     }
     MPI_Bcast(x, n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
@@ -122,7 +62,7 @@ int main() {
     int local_m, local_n;
     if (rank == 0) {
         if (matrix && vector) {
-            divide(matrix, m, n, num_A, comm_size, &local_A, &local_m);
+            distribute(matrix, m, n, comm_size, &local_A, &local_m);
         }
     } else {
         recv_divide(&local_m, &local_A, n);
