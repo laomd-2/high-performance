@@ -17,14 +17,14 @@ typedef struct {
     int comm_size;
 }Comm_Info;
 
-Comm_Info init_info(MPI_Comm comm) {
+Comm_Info get_info(MPI_Comm comm) {
     Comm_Info info;
     MPI_Comm_rank(comm, &info.rank);
     MPI_Comm_size(comm, &info.comm_size);
     return info;
 }
 
-DoubleArray init_array(int size) {
+DoubleArray malloc_array(int size) {
     if (size < 0)
         size = 0;
     DoubleArray array;

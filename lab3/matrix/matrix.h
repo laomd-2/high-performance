@@ -12,8 +12,8 @@ DoubleArray mat_vect_mult(
         DoubleArray local_x,
         int n
 ) {
-    DoubleArray local_y = init_array(local_A.size / n);
-    DoubleArray x = init_array(n);
+    DoubleArray local_y = malloc_array(local_A.size / n);
+    DoubleArray x = malloc_array(n);
 
     Allgatherv(local_x, x, MPI_COMM_WORLD);
 

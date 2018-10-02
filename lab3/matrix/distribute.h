@@ -11,16 +11,16 @@
 #include "mympi.h"
 
 DoubleArray distribute_by_row(FILE *file, int cnt, int m, int n, MPI_Comm comm) {
-    Comm_Info info = init_info(comm);
+    Comm_Info info = get_info(comm);
 
     int *v = get_v(m, info.comm_size);
-    DoubleArray res = init_array(v[info.rank] * n);
+    DoubleArray res = malloc_array(v[info.rank] * n);
 
     DoubleArray global_one_col;
     if (info.rank == 0)
-        global_one_col = init_array(m);
+        global_one_col = malloc_array(m);
 
-    DoubleArray tmp = init_array(v[info.rank]);
+    DoubleArray tmp = malloc_array(v[info.rank]);
 
     for (int i = 0; i < n; ++i) {
         int row, col;

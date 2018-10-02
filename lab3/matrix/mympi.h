@@ -30,7 +30,7 @@ int* get_disp(const int* v, int comm_size) {
 
 void Iscatterv(DoubleArray global, DoubleArray local,
         MPI_Comm comm, int root, MPI_Request* request) {
-    Comm_Info info = init_info(comm);
+    Comm_Info info = get_info(comm);
     int *v = get_v(global.size, info.comm_size);
     int *disp = get_disp(v, info.comm_size);
     MPI_Iscatterv(global.A, v, disp, MPI_DOUBLE, local.A, local.size, MPI_DOUBLE, root, comm, request);
@@ -40,7 +40,7 @@ void Iscatterv(DoubleArray global, DoubleArray local,
 
 void Gatherv(DoubleArray local, DoubleArray global,
         int root, MPI_Comm comm) {
-    Comm_Info info = init_info(comm);
+    Comm_Info info = get_info(comm);
     int *v = get_v(global.size, info.comm_size);
     int *disp = get_disp(v, info.comm_size);
     MPI_Gatherv(local.A, local.size, MPI_DOUBLE, global.A, v, disp, MPI_DOUBLE, root, comm);
@@ -49,7 +49,7 @@ void Gatherv(DoubleArray local, DoubleArray global,
 }
 
 void Allgatherv(DoubleArray local, DoubleArray global, MPI_Comm comm) {
-    Comm_Info info = init_info(comm);
+    Comm_Info info = get_info(comm);
     int *v = get_v(global.size, info.comm_size);
     int *disp = get_disp(v, info.comm_size);
     MPI_Allgatherv(local.A, local.size, MPI_DOUBLE, global.A, v, disp, MPI_DOUBLE, comm);

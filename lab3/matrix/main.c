@@ -4,7 +4,7 @@
 
 int main() {
     MPI_Init(NULL, NULL);
-    Comm_Info info = init_info(MPI_COMM_WORLD);
+    Comm_Info info = get_info(MPI_COMM_WORLD);
 
     FILE *matrix = NULL;
     FILE *vector = NULL;
@@ -33,7 +33,7 @@ int main() {
     DoubleArray global_y;
     FILE* out;
     if (info.rank == 0) {
-        global_y = init_array(matrix_size[0]);
+        global_y = malloc_array(matrix_size[0]);
         out = fopen("result.mtx", "w");
     }
 
