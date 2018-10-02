@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "mympi.h"
+#include "../common/mympi.h"
 
 DoubleArray distribute_by_row(FILE *file, int cnt, int m, int n, MPI_Comm comm) {
     Comm_Info info = get_info(comm);

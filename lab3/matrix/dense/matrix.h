@@ -5,7 +5,7 @@
 #ifndef MATRIX_MATRIX_H
 #define MATRIX_MATRIX_H
 
-#include "mympi.h"
+#include "../common/mympi.h"
 
 DoubleArray mat_vect_mult(
         DoubleArray local_A,
