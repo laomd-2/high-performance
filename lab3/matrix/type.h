@@ -35,6 +35,12 @@ DoubleArray init_array(int size) {
     return array;
 }
 
+void free_array(DoubleArray *array) {
+    free(array->A);
+    array->A = NULL;
+    array->size = 0;
+}
+
 void copy(DoubleArray *dest, DoubleArray src) {
     (*dest).size = src.size;
     memcpy((*dest).A, src.A, src.size * sizeof(double));

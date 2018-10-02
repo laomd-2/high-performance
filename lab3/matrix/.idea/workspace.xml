@@ -3,7 +3,6 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
       <config projectName="matrix" targetName="matrix" />
-      <config projectName="matrix" targetName="test_" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -13,20 +12,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0dfa74da-cc99-480d-a700-ac3735e0785e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/distribute.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/type.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mympi.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../lab2/report/build/lab2.fdb_latexmk" beforeDir="false" afterPath="$PROJECT_DIR$/../../lab2/report/build/lab2.fdb_latexmk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/distribute.h" beforeDir="false" afterPath="$PROJECT_DIR$/distribute.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/matrix.h" beforeDir="false" afterPath="$PROJECT_DIR$/matrix.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matrix.mtx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matrix_io.h" beforeDir="false" afterPath="$PROJECT_DIR$/matrix_io.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/result.mtx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/send_recv.h" beforeDir="false" afterPath="$PROJECT_DIR$/send_recv.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vector.mtx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/matrix_io.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/result.mtx" beforeDir="false" afterPath="$PROJECT_DIR$/result.mtx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/send_recv.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/type.h" beforeDir="false" afterPath="$PROJECT_DIR$/type.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -41,43 +38,44 @@
     <session id="-727783734">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.26" value="1" />
           <entry key="project.open.time.3" value="1" />
-          <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="6" />
+          <entry key="project.open.time.9" value="3" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="c" value="10015" />
-          <entry key="h" value="5453" />
+          <entry key="c" value="10182" />
+          <entry key="h" value="6258" />
           <entry key="mat" value="3" />
-          <entry key="txt" value="130" />
+          <entry key="txt" value="135" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CMakeLists.txt" value="86" />
-          <entry key="ObjectiveC" value="15468" />
-          <entry key="PLAIN_TEXT" value="47" />
+          <entry key="ObjectiveC" value="16440" />
+          <entry key="PLAIN_TEXT" value="52" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="c" value="3" />
-          <entry key="h" value="15" />
+          <entry key="h" value="17" />
           <entry key="mat" value="2" />
-          <entry key="mtx" value="19" />
-          <entry key="txt" value="8" />
+          <entry key="mtx" value="23" />
+          <entry key="txt" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="ObjectiveC" value="18" />
-          <entry key="PLAIN_TEXT" value="29" />
+          <entry key="CMakeLists.txt" value="1" />
+          <entry key="ObjectiveC" value="20" />
+          <entry key="PLAIN_TEXT" value="33" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -89,17 +87,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+            <state relative-caret-position="128">
+              <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="53" column="25" lean-forward="true" selection-start-line="53" selection-start-column="25" selection-end-line="53" selection-end-column="25" />
+            <state relative-caret-position="160">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -108,58 +106,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmake-build-release/result.mtx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/matrix.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="28" column="25" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
-              <folding>
-                <element signature="e#41#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmake-build-release/vector.mtx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="9" selection-start-column="9" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cmake-build-release/matrix.mtx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="9" column="9" lean-forward="true" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/type.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="55" column="36" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+            <state relative-caret-position="335">
+              <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -167,8 +117,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/distribute.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="61" column="46" selection-start-line="61" selection-start-column="46" selection-end-line="61" selection-end-column="46" />
+            <state relative-caret-position="-368">
+              <caret line="16" column="51" lean-forward="true" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
               <folding>
                 <element signature="e#98#116#0" expanded="true" />
               </folding>
@@ -177,10 +127,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/send_recv.h">
+        <entry file="file://$PROJECT_DIR$/mympi.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="29" column="1" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
+            <state relative-caret-position="311">
+              <caret line="59" lean-forward="true" selection-start-line="59" selection-end-line="59" />
+              <folding>
+                <element signature="e#88#107#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -206,15 +159,16 @@
         <option value="$PROJECT_DIR$/main1.c" />
         <option value="$PROJECT_DIR$/matrix_io.h" />
         <option value="$PROJECT_DIR$/test.txt" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/cmake-build-release/input.txt" />
         <option value="$PROJECT_DIR$/send_recv.h" />
-        <option value="$PROJECT_DIR$/distribute.h" />
-        <option value="$PROJECT_DIR$/type.h" />
         <option value="$PROJECT_DIR$/cmake-build-release/matrix.mat" />
         <option value="$PROJECT_DIR$/test.c" />
         <option value="$PROJECT_DIR$/cmake-build-release/vector.mat" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/type.h" />
+        <option value="$PROJECT_DIR$/mympi.h" />
         <option value="$PROJECT_DIR$/matrix.h" />
+        <option value="$PROJECT_DIR$/distribute.h" />
         <option value="$PROJECT_DIR$/main.c" />
       </list>
     </option>
@@ -240,11 +194,6 @@
               <item name="matrix" type="b2602c69:ProjectViewProjectNode" />
               <item name="matrix" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="matrix" type="b2602c69:ProjectViewProjectNode" />
-              <item name="matrix" type="462c0819:PsiDirectoryNode" />
-              <item name="cmake-build-release" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -255,12 +204,12 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="D:/Program Files/Microsoft MPI/Bin/mpiexec.exe" />
-    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\learning\high-performance-computing\lab3\matrix" />
       <recent name="D:\learning\high-performance-computing\lab3\matrix\cmake-build-release" />
+      <recent name="D:\learning\high-performance-computing\lab3\matrix" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -286,15 +235,9 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="test_" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="file://$PROJECT_DIR$/cmake-build-release" PASS_PARENT_ENVS_2="true" PROJECT_NAME="matrix" TARGET_NAME="test_" CONFIG_NAME="Release" RUN_TARGET_PROJECT_NAME="matrix" RUN_TARGET_NAME="test_">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.Build All" />
       <item itemvalue="Application.matrix" />
-      <item itemvalue="Application.test_" />
     </list>
   </component>
   <component name="TaskManager">
@@ -309,7 +252,8 @@
       <workItem from="1538285326539" duration="327000" />
       <workItem from="1538403208069" duration="10258000" />
       <workItem from="1538443533452" duration="11215000" />
-      <workItem from="1538457959736" duration="13542000" />
+      <workItem from="1538457959736" duration="13765000" />
+      <workItem from="1538482831067" duration="3375000" />
     </task>
     <task id="LOCAL-00001" summary="代码重构">
       <created>1538407029490</created>
@@ -318,17 +262,25 @@
       <option name="project" value="LOCAL" />
       <updated>1538407029490</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="bug修正">
+      <created>1538471796342</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1538471796342</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55125000" />
+    <option name="totallyTimeSpent" value="58723000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.24886535" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.2526475" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Terminal" order="1" />
@@ -353,25 +305,21 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/learning/AI/code" />
+      <path value="$PROJECT_DIR$/learning/AI/experiment" />
+    </ignored-roots>
     <MESSAGE value="代码重构" />
-    <option name="LAST_COMMIT_MESSAGE" value="代码重构" />
+    <MESSAGE value="bug修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug修正" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/main1.c" />
-    <entry file="file://$PROJECT_DIR$/cmake-build-release/vector.mtx" />
-    <entry file="file://$PROJECT_DIR$/cmake-build-release/matrix.mtx" />
     <entry file="file://$PROJECT_DIR$/result/vector.mtx" />
     <entry file="file://$PROJECT_DIR$/result/matrix.mtx" />
     <entry file="file://$USER_HOME$/Documents/Tencent Files/965524991/FileRecv/实验 学生用/实验 学生用/2/trainLabel.txt" />
     <entry file="file://$USER_HOME$/Documents/Tencent Files/965524991/FileRecv/实验 学生用/实验 学生用/2/trainData.txt" />
     <entry file="file://$USER_HOME$/Documents/Tencent Files/965524991/FileRecv/实验 学生用/实验 学生用/2/testData.txt" />
-    <entry file="file://$PROJECT_DIR$/matrix_io.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vector.mtx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="487">
@@ -380,13 +328,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test.txt" />
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/Program Files (x86)/Microsoft SDKs/MPI/Include/mpi.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
@@ -394,82 +335,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/send_recv.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="29" column="1" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/cmake-build-release/input.txt" />
+    <entry file="file://$PROJECT_DIR$/result1.mtx" />
+    <entry file="file://$PROJECT_DIR$/test.c" />
+    <entry file="file://$PROJECT_DIR$/cmake-build-release/vector.mtx" />
+    <entry file="file://$PROJECT_DIR$/cmake-build-release/matrix.mtx">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-release/input.txt">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="5" selection-start-column="5" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/distribute.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="61" column="46" selection-start-line="61" selection-start-column="46" selection-end-line="61" selection-end-column="46" />
-          <folding>
-            <element signature="e#98#116#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/result1.mtx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="18" column="21" lean-forward="true" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/result.mtx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="17" lean-forward="true" selection-start-column="17" selection-end-line="2" selection-end-column="14" />
+        <state relative-caret-position="128">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/type.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="55" column="36" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+        <state relative-caret-position="128">
+          <caret line="41" column="1" lean-forward="true" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.c">
+    <entry file="file://$PROJECT_DIR$/result.mtx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
-          <folding>
-            <element signature="e#41#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-release/vector.mtx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="9" selection-start-column="9" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/matrix.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="28" column="25" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="53" column="25" lean-forward="true" selection-start-line="53" selection-start-column="25" selection-end-line="53" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="96">
+          <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -480,10 +370,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-release/matrix.mtx">
+    <entry file="file://$PROJECT_DIR$/matrix.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="9" column="9" lean-forward="true" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+        <state relative-caret-position="335">
+          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/send_recv.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-137">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="15" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matrix_io.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mympi.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="59" lean-forward="true" selection-start-line="59" selection-end-line="59" />
+          <folding>
+            <element signature="e#88#107#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/distribute.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-368">
+          <caret line="16" column="51" lean-forward="true" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
+          <folding>
+            <element signature="e#98#116#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
