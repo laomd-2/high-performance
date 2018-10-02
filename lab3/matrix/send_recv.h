@@ -5,32 +5,28 @@
 #ifndef MATRIX_SEND_RECV_H
 #define MATRIX_SEND_RECV_H
 
+#include "type.h"
+
+DoubleArray recv_array(int n) {
+    DoubleArray array;
+    MPI_Recv(&array.size, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    array.A = malloc(array.size * n * sizeof(double));
+    MPI_Recv(array.A, array.size * n, MPI_DOUBLE, 0, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    return array;
+}
+
 void send_or_copy(
-        const void* src_buffer,
-        void* dest_buffer,
-        int count,
-        MPI_Datatype datatype,
+        DoubleArray src_buffer,
+        DoubleArray *dest_buffer,
         int dest,
         int tag,
         MPI_Comm comm) {
-    int rank;
-    MPI_Comm_rank(comm, &rank);
-    if (dest == rank) {
-        size_t size = sizeof(int);
-        if (datatype == MPI_DOUBLE)
-            size = sizeof(double);
-        memcpy(dest_buffer, src_buffer, count * size);
+    if (dest == 0) {
+        copy(dest_buffer, src_buffer);
     } else {
         MPI_Request request;
-        MPI_Isend(src_buffer, count, datatype, dest, tag, comm, &request);
+        MPI_Isend(src_buffer.A, src_buffer.size, MPI_DOUBLE, dest, tag, comm, &request);
     }
-}
-
-
-void recv_divide(int *local_m, double **local_A, int n) {
-    MPI_Recv(local_m, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    *local_A = malloc(*local_m * n * sizeof(double));
-    MPI_Recv(*local_A, *local_m * n, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 }
 
 
