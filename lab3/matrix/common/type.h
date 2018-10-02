@@ -6,6 +6,8 @@
 #define MATRIX_TYPE_H
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct {
     double *A;
@@ -16,6 +18,12 @@ typedef struct {
     int rank;
     int comm_size;
 }Comm_Info;
+
+typedef struct {
+    int i;
+    int j;
+    double value;
+}MatrixElem;
 
 Comm_Info get_info(MPI_Comm comm) {
     Comm_Info info;
