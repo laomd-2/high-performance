@@ -1,0 +1,298 @@
+\documentclass[UTF8,a4paper,12pt]{article}
+
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{ctex}
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{subfigure}
+\usepackage{natbib} % Required to change bibliography style to APA
+\usepackage{amsmath} % Required for some math elements
+\usepackage{enumitem}
+\usepackage{indentfirst}
+
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
+\floatname{algorithm}{算法}
+\renewcommand{\algorithmicrequire}{\textbf{输入:}}
+\renewcommand{\algorithmicensure}{\textbf{输出:}}
+
+\usepackage{listings}
+% \usepackage{times} % Uncomment to use the Times New Roman font
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%---------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        \phantom{Start!}
+    	  \vspace{2cm}
+        \center{\zihao{1} 《高性能程序设计基础》}
+        \center{\zihao{1} 实验报告}
+        {
+            \setlength{\baselineskip}{40pt}
+            \vspace{1cm}
+            \zihao{-2}
+            \center{
+                \begin{tabular}{cc}
+                  实验序号：& \underline{~~~~~~实验三~~~~~~}\\
+                  实验名称：& \underline{~MPI矩阵向量乘法的并行算法~}\\
+                  姓\qquad 名：& \underline{~~~~~~劳马东~~~~~~}  \\
+              	  学\qquad 号：& \underline{~~~~~16337113~~~~~}  \\
+              	\end{tabular}
+            }
+        }
+    \end{center}
+\end{titlepage}
+
+\section{实验题目}
+\begin{enumerate}[itemindent=0.5em,label=(\arabic*)]
+  \item 用MPI完成稠密矩阵向量乘法的并行算法
+  \begin{enumerate}
+    \item 任务划分按照数据划分方法
+    \begin{enumerate}
+      \item 按输出数据划分
+      \item 按输入数据划分
+    \end{enumerate}
+    \item 矩阵和向量从磁盘读入
+	  \item 结果输出到磁盘
+    \item 矩阵和向量文件格式统一按三元组存放
+    \item 矩阵很大，可能一个节点存不下
+  \end{enumerate}
+  \item 用MPI完成稀疏矩阵向量乘法的并行算法
+  \begin{enumerate}
+    \item 根据非零元分布划分矩阵
+  \end{enumerate}
+\end{enumerate}
+\section{实验目的}
+\begin{enumerate}[itemindent=0.5em,label=(\arabic*)]
+  \item 熟悉MPI全局聚集函数的使用；
+  \item 掌握常见任务划分方法。
+\end{enumerate}
+
+\section{实验要求}
+\begin{enumerate}[itemindent=0.5em,label=(\arabic*)]
+  \item 计算算法的加速比，并列表
+\end{enumerate}
+\section{实验过程}
+\subsection{稠密矩阵向量乘法}
+\begin{enumerate}[itemindent=0.5em,label=\arabic*、]
+  \item 矩阵划分
+  \begin{enumerate}
+    \item 按行划分
+    \par 输入文件的矩阵格式是按列给出，因此根进程每次读入一列，然后将这一列分发到各个进程。
+    由于一列的大小不一定是进程数的整数倍，因此分发不是平均的，各个进程负载大小（行数）通过
+    一个行负载计算模块得到。收到的数据需要经过一次矩阵变换——转置，因为一列在物理上存储为一维数组，本质上是一个
+    行向量，而收到的数据逻辑上是列向量。如图1。
+    \begin{figure}[h]
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{divide_on_row.png} % Include the image placeholder.png
+    \caption{行划分流程}
+    \end{center}
+    \end{figure}
+    \newpage
+    \par 图2、3、4、5是该过程的主要代码。$global\_one\_col$是一个一维数组，一行结束标志为文件末尾或读入的列号为下一列；
+    细节之处在于如果是由于读入了下一列而中止循环，那么下一列的第一行已经被读走了；一列的分发是异步的，因为0号进程之后不需要
+    用到这次读的一列，如此可以提高性能。
+    \begin{figure}[h]
+    \begin{center}
+    \includegraphics[width=0.6\textwidth]{divide_on_row2_1.png} % Include the image placeholder.png
+    \caption{读入一行}
+    \end{center}
+    \end{figure}
+
+    \begin{figure}[h]
+    \begin{center}
+    \includegraphics[height=0.15\textwidth]{divide_on_row2_4.png} % Include the image placeholder.png
+    \caption{细节处理}
+    \end{center}
+    \end{figure}
+
+    \begin{figure}[h]
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{divide_on_row2_2.png} % Include the image placeholder.png
+    \caption{分发}
+    \end{center}
+    \end{figure}
+
+    \begin{figure}[h]
+    \begin{center}
+    \includegraphics[width=0.6\textwidth]{divide_on_row2_3.png} % Include the image placeholder.png
+    \caption{矩阵转置}
+    \end{center}
+    \end{figure}
+\newpage
+  \end{enumerate}
+  \item 局部稠密矩阵与向量相乘
+  \par 由于本地矩阵的每一列都是完整的，因此该算法就是普通的矩阵-向量乘法。
+  \par 需要强调的是，向量x也按行划分的方式
+  分布在各个进程之中，依然是为了性能。
+  假设各个进程接收字节的速率为：
+  \begin{equation}
+    d_{min} = \min\{{d_0, d_1, ..., d_i, ..., d_{N-1}\}}
+  \end{equation}
+  无论如何每个进程在做矩阵-向量乘法的时候都需要得到完整的x。假如
+  0号进程读取向量并用广播的方式发送给其他进程。
+  假设进程数为N，向量字节数为F，那么该过程至少需要的时间为：
+  \begin{equation}
+    t_{broadcast} = \frac{N \times F}{d_{min}} = O(N)
+  \end{equation}
+  而采用先分发再蝶形收集的方法，至少需要的时间为：
+  \begin{equation}
+    \begin{aligned}
+      t_2 = t_{scatter} + t_{all\_gather} =
+      \sum_{i=1}^{N}\frac{\frac{F}{N}}{d_i} + \sum_{i=1}^{\log_2N}{\frac{i \times F}{d_{min}}}
+      = O((\log_2N)^2)
+    \end{aligned}
+  \end{equation}
+  此外，分发过程与0号进程读向量的过程可以并发，进一步
+  提高性能。
+  \begin{figure}[h]
+  \begin{center}
+  \includegraphics[width=0.75\textwidth]{d_mat_vec_mul.png} % Include the image placeholder.png
+  \caption{向量聚集与乘法}
+  \end{center}
+  \end{figure}
+
+  \item 局部结果聚合
+  \par 使用MPI的gatherv函数收集每个进程本地的y向量即可。
+\end{enumerate}
+\subsection{稀疏矩阵向量乘法}
+\begin{enumerate}[itemindent=0.5em,label=\arabic*、]
+  \item 矩阵划分——按元素划分
+  \par 简单起见，首先读入完整的矩阵，然后调用MPI的scatterv函数按元素顺序分发。效率更高
+  的方法是根据每个进程的负载读入相应个数的元素，然后异步send到对应进程。但由于在实验中发现
+  读取整个矩阵的时间极短（不足1秒），因此采用简单方法。
+  \begin{figure}[h]
+  \begin{center}
+  \includegraphics[width=0.8\textwidth]{divide_on_elem.png} % Include the image placeholder.png
+  \caption{按元素划分的两种方法}
+  \end{center}
+  \end{figure}
+  \item 局部矩阵与向量相乘
+  \par 遍历局部矩阵中的每个元素，获得其行列下标，与全局向量x对应位置相乘求和，放入局部结果矩阵$local\_y$（与全局y大小相同）即可。
+  \begin{figure}[h]
+  \begin{center}
+  \includegraphics[width=0.8\textwidth]{s_mat_vec_mul.png} % Include the image placeholder.png
+  \caption{稀疏矩阵与向量乘法}
+  \end{center}
+  \end{figure}
+  \item 局部结果聚合
+  \par 每个进程本地的$local\_y$向量相加就是全局y，因此调用MPI的reduce函数求和即可。
+\end{enumerate}
+
+\section{实验结果及分析}
+\subsection{正确性验证}
+测试进程数为4，测试矩阵与向量为：
+\begin{equation}
+  A =
+ \begin{bmatrix}
+   2 & 3 & 5 & 2 & 1 & 1\\
+   1 & 0 & 3 & 4 & 5 & 0\\
+   5 & 3 & 5 & 4 & 1 & 0\\
+   0 & 0 & 3 & 5 & 5 & 4\\
+   2 & 5 & 5 & 4 & 0 & 5\\
+   3 & 4 & 2 & 1 & 4 & 3
+  \end{bmatrix} \qquad
+  x =
+  \begin{bmatrix}
+    3\\
+    4\\
+    4\\
+    1\\
+    5\\
+    4
+    \end{bmatrix}
+\end{equation}
+\begin{enumerate}[itemindent=0.5em,label=\arabic*、]
+  \item 稠密矩阵
+  \par 总共6行，进程0分到前两行（2 3 5 2 1 1 1 3 4 5，只输出非0元素），依此类推，结果正确；
+  \par 进程0本地y为$(49=2*3+3*4+5*4+2*1+1*5+1*4,44)$，依此类推，结果正确；
+  \par 全局y为$(49,44,56,58,70,66)$，正确。
+  \begin{figure}[H]
+  \centering
+  \subfigure[行划分结果]{
+  \includegraphics[width=0.3\textwidth]{result_row_divide.png}}
+  \subfigure[进程本地y]{
+  \includegraphics[width=0.3\textwidth]{result_local_y1.png}}
+  \subfigure[全局y]{
+  \includegraphics[width=0.3\textwidth]{result_y1.png}}
+  \end{figure}
+
+  \item 稀疏矩阵
+  \par 总共30个元素，进程0和1按顺序分到8个，进程2、3按顺序分到7个，正确；
+  \par 进程0本地y为$(18=2*3+3*4,3,27,26,9)$，以此类推，结果正确；
+  \par 全局y正确。
+
+  \begin{figure}[H]
+  \centering
+  \subfigure[行划分结果]{
+  \includegraphics[width=0.3\textwidth]{result_row_elem.png}}
+  \subfigure[进程本地y]{
+  \includegraphics[width=0.3\textwidth]{result_local_y2.png}}
+  \subfigure[全局y]{
+  \includegraphics[width=0.3\textwidth]{result_y2.png}}
+  \end{figure}
+\end{enumerate}
+
+\subsection{加速比计算}
+\begin{enumerate}[itemindent=0.5em,label=\arabic*、]
+  \item 稠密矩阵
+  \begin{center}
+      \begin{tabular}{cccc}
+      \hline
+      进程数 & 运行时间/秒 & 加速比 & 效率/\%\\
+      \hline
+      1	& 122 & 1 & 100\\
+      2	& 70.339 & 1.73 & 86.72\\
+      4	& 41.676 & 2.92 & 73.18\\
+      8	& 25.574 & 4.77 & 59.63\\
+      16 & 17.47 & 6.98 & 43.64\\
+      28 & 14.274 & 8.55 & 30.52\\
+      \hline
+      \end{tabular}
+  \end{center}
+
+  \begin{figure}[H]
+  \centering
+  \subfigure[时间]{
+  \includegraphics[width=0.3\textwidth]{time_dense.png}}
+  \subfigure[加速比]{
+  \includegraphics[width=0.3\textwidth]{speedup_dense.png}}
+  \subfigure[效率]{
+  \includegraphics[width=0.3\textwidth]{eff_dense.png}}
+  \end{figure}
+
+  \item 稀疏矩阵
+  \begin{center}
+      \begin{tabular}{cccc}
+      \hline
+      进程数 & 运行时间/秒 & 加速比 & 效率/\%\\
+      \hline
+      1 &	1.226	&	1	&	100\\
+      2 &	1.216	&	1.008	&	50.41\\
+      4 &	1.223	&	1.002	&	25.06\\
+      8	&	1.278	&	0.959	&	11.99\\
+      16 & 1.438 & 0.852 & 5.33\\
+      28 & 1.467 & 0.836 & 2.98\\
+      \hline
+      \end{tabular}
+  \end{center}
+
+  \begin{figure}[H]
+  \centering
+  \subfigure[时间]{
+  \includegraphics[width=0.3\textwidth]{time_sparse.png}}
+  \subfigure[加速比]{
+  \includegraphics[width=0.3\textwidth]{speedup_sparse.png}}
+  \subfigure[效率]{
+  \includegraphics[width=0.3\textwidth]{eff_sparse.png}}
+  \end{figure}
+
+\end{enumerate}
+\end{document}
