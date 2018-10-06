@@ -7,7 +7,6 @@
 
 int main() {
     Init(0, 0);
-
     Comm_Info info = get_info(MPI_COMM_WORLD);
 
     FILE *matrix = 0, *vector = 0;
