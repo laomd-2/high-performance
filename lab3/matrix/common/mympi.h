@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 #include <mpi.h>
-#include "type.h"
+#include <type.h>
 
 MPI_Datatype MPI_MATRIX_ELEM;
 void Init(int* argc, char*** argv) {
@@ -56,6 +56,10 @@ void Iscatterv(DoubleArray global, DoubleArray local,
     free(disp);
 }
 
+void Ibcast(DoubleArray buffer, MPI_Comm comm, int root, MPI_Request *request) {
+    MPI_Ibcast(buffer.A, buffer.size, MPI_DOUBLE, root, comm, request);
+}
+
 void Gatherv(DoubleArray local, DoubleArray global,
         int root, MPI_Comm comm) {
     Comm_Info info = get_info(comm);
@@ -64,6 +68,15 @@ void Gatherv(DoubleArray local, DoubleArray global,
     MPI_Gatherv(local.A, local.size, MPI_DOUBLE, global.A, v, disp, MPI_DOUBLE, root, comm);
     free(v);
     free(disp);
+}
+
+DoubleArray Reduce(DoubleArray local, MPI_Op op, int root, MPI_Comm comm) {
+    Comm_Info info = get_info(comm);
+    DoubleArray global;
+    if (info.rank == root)
+        global = malloc_array(local.size);
+    MPI_Reduce(local.A, global.A, local.size, MPI_DOUBLE, op, root, comm);
+    return global;
 }
 
 void Allgatherv(DoubleArray local, DoubleArray global, MPI_Comm comm) {

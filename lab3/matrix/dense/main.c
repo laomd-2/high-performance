@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "distribute.h"
-#include "matrix.h"
+#include "divide.h"
+#include "matrix_mul.h"
 
 int main() {
     MPI_Init(NULL, NULL);
@@ -21,29 +21,30 @@ int main() {
     MPI_Bcast(matrix_size, 2, MPI_INT, 0, MPI_COMM_WORLD);
 
 //    1、任务划分
-    DoubleArray local_A = distribute_by_row(matrix, cnt_A, matrix_size[0], matrix_size[1], MPI_COMM_WORLD);
-    DoubleArray local_x = distribute_by_row(vector, cnt_x, matrix_size[1], 1, MPI_COMM_WORLD);
+    DoubleArray local_A = divide_on_row(matrix, cnt_A, matrix_size[0], matrix_size[1], MPI_COMM_WORLD);
+    fclose(matrix);
+    DoubleArray local_x = divide_on_row(vector, cnt_x, matrix_size[1], 1, MPI_COMM_WORLD);
+    fclose(vector);
 
 //    2、局部矩阵与全局向量相乘
-    DoubleArray local_y = mat_vect_mult(local_A, local_x, matrix_size[1]);
+    DoubleArray local_y = dense_mat_vect_mult(local_A, local_x, matrix_size[1]);
     free_array(&local_A);
     free_array(&local_x);
 
 //    3、任务聚合
     DoubleArray global_y;
-    FILE* out;
-    if (info.rank == 0) {
+    if (info.rank == 0)
         global_y = malloc_array(matrix_size[0]);
-        out = fopen("result.mtx", "w");
-    }
 
     Gatherv(local_y, global_y, 0, MPI_COMM_WORLD);
     free_array(&local_y);
 
 //    4、输出
     if (info.rank == 0) {
+        FILE *out = fopen("result-dense.mtx", "w");
         print_array(out, global_y);
         free_array(&global_y);
+        fclose(out);
     }
     MPI_Finalize();
     return 0;

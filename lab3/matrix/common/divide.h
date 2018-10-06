@@ -8,9 +8,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../common/mympi.h"
+#include <mympi.h>
 
-DoubleArray distribute_by_row(FILE *file, int cnt, int m, int n, MPI_Comm comm) {
+DoubleArray divide_on_row(FILE *file, int cnt, int m, int n, MPI_Comm comm) {
     Comm_Info info = get_info(comm);
 
     int *v = get_v(m, info.comm_size);
@@ -51,6 +51,30 @@ DoubleArray distribute_by_row(FILE *file, int cnt, int m, int n, MPI_Comm comm) 
         free_array(&global_one_col);
     free(v);
     return res;
+}
+
+MatrixElem* divide_on_elem(FILE* file, int num_elems, MPI_Comm comm, int *local_balance) {
+    Comm_Info info = get_info(comm);
+    MatrixElem *array = NULL;
+    if (info.rank == 0) {
+        array = malloc(sizeof(MatrixElem) * num_elems);
+        for (int i = 0; i < num_elems; i++) {
+            fscanf(file, "%d %d %lf", &(array[i].i), &(array[i].j), &(array[i].value));
+        }
+    }
+    int *balance = get_v(num_elems, info.comm_size);
+    *local_balance = balance[info.rank];
+    MatrixElem *local_A = NULL;
+
+    if (balance[info.rank]) {
+        local_A = malloc(sizeof(MatrixElem) * balance[info.rank]);
+        MPI_Scatterv(array, balance, get_disp(balance, info.comm_size), MPI_MATRIX_ELEM,
+                     local_A, balance[info.rank], MPI_MATRIX_ELEM, 0, MPI_COMM_WORLD);
+    }
+    free(balance);
+    if (info.rank == 0)
+        free(array);
+    return local_A;
 }
 
 #endif //MATRIX_DISTRIBUTE_H
