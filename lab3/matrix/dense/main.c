@@ -22,6 +22,7 @@ int main() {
 
 //    1、任务划分
     DoubleArray local_A = divide_on_row(matrix, cnt_A, matrix_size[0], matrix_size[1], MPI_COMM_WORLD);
+
     fclose(matrix);
     DoubleArray local_x = divide_on_row(vector, cnt_x, matrix_size[1], 1, MPI_COMM_WORLD);
     fclose(vector);

@@ -58,6 +58,13 @@ void clear(DoubleArray array) {
     memset(array.A, 0, array.size * sizeof(double));
 }
 
+void debug(DoubleArray array) {
+    for (int i = 0; i < array.size; ++i) {
+        if (array.A[i])
+            printf("%g ", array.A[i]);
+    }
+    printf("\n");
+}
 void print_array(FILE* out, DoubleArray array) {
     int cnt = 0;
     for (int i = 0; i < array.size; ++i) {

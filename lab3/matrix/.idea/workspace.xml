@@ -16,13 +16,18 @@
       <change afterPath="$PROJECT_DIR$/../../cxx-mpi/hello/.idea/codeStyles/Project.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../cxx-mpi/hello/.idea/misc.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../cxx-mpi/hello/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sparse/divide.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../lab2/report/build/lab2.fdb_latexmk" beforeDir="false" afterPath="$PROJECT_DIR$/../../lab2/report/build/lab2.fdb_latexmk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/mympi.h" beforeDir="false" afterPath="$PROJECT_DIR$/common/mympi.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dense/distribute.h" beforeDir="false" afterPath="$PROJECT_DIR$/common/divide.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dense/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/dense/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dense/matrix.h" beforeDir="false" afterPath="$PROJECT_DIR$/common/matrix_mul.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/divide.h" beforeDir="false" afterPath="$PROJECT_DIR$/common/divide.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/matrix_mul.h" beforeDir="false" afterPath="$PROJECT_DIR$/common/matrix_mul.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/type.h" beforeDir="false" afterPath="$PROJECT_DIR$/common/type.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dense/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/dense/main_mpi.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dense/result.mtx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dense/test/matrix.mtx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dense/test/result.mtx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dense/test/vector.mtx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparse/divide.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/sparse/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/sparse/main.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -38,47 +43,48 @@
     <session id="-727783734">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="10" />
+          <entry key="project.closed" value="11" />
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.26" value="1" />
+          <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.9" value="4" />
-          <entry key="project.opened" value="11" />
+          <entry key="project.opened" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="c" value="13808" />
-          <entry key="h" value="7627" />
+          <entry key="c" value="14081" />
+          <entry key="h" value="7811" />
           <entry key="mat" value="3" />
-          <entry key="txt" value="221" />
+          <entry key="txt" value="252" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CMakeLists.txt" value="146" />
-          <entry key="ObjectiveC" value="21435" />
-          <entry key="PLAIN_TEXT" value="78" />
+          <entry key="CMakeLists.txt" value="159" />
+          <entry key="ObjectiveC" value="21892" />
+          <entry key="PLAIN_TEXT" value="96" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="c" value="7" />
+          <entry key="c" value="10" />
           <entry key="cpp" value="1" />
-          <entry key="h" value="32" />
+          <entry key="h" value="37" />
           <entry key="mat" value="2" />
-          <entry key="mtx" value="34" />
-          <entry key="txt" value="9" />
+          <entry key="mtx" value="40" />
+          <entry key="txt" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CMakeLists.txt" value="1" />
-          <entry key="ObjectiveC" value="40" />
-          <entry key="PLAIN_TEXT" value="44" />
+          <entry key="CMakeLists.txt" value="2" />
+          <entry key="ObjectiveC" value="48" />
+          <entry key="PLAIN_TEXT" value="50" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -90,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sparse/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="53" column="30" selection-start-line="53" selection-start-column="30" selection-end-line="53" selection-end-column="30" />
+            <state relative-caret-position="207">
+              <caret line="43" column="56" selection-start-line="43" selection-start-column="56" selection-end-line="43" selection-end-column="56" />
               <folding>
                 <element signature="e#40#58#0" expanded="true" />
               </folding>
@@ -99,14 +105,83 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/dense/main.c">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dense/main_mpi.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="41" column="10" lean-forward="true" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
+            <state relative-caret-position="368">
+              <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/divide.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-160">
+              <caret line="17" column="49" selection-start-line="17" selection-start-column="49" selection-end-line="17" selection-end-column="49" />
+              <folding>
+                <element signature="e#98#116#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="11" column="35" lean-forward="true" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cmake-build-release/result-dense.mtx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="112">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmake-build-release/result-sparse.mtx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="112">
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/type.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="303">
+              <caret line="70" column="23" selection-start-line="70" selection-start-column="23" selection-end-line="70" selection-end-column="23" />
+              <folding>
+                <element signature="e#86#104#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/matrix_mul.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="463">
+              <caret line="33" column="1" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmake-build-release/matrix.mtx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="18" column="9" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -142,8 +217,6 @@
         <option value="$PROJECT_DIR$/distribute.h" />
         <option value="$PROJECT_DIR$/main.c" />
         <option value="$PROJECT_DIR$/type.h" />
-        <option value="$PROJECT_DIR$/common/type.h" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/sparse/matrix.h" />
         <option value="$PROJECT_DIR$/dense/dense_matrix_mul.h" />
         <option value="$PROJECT_DIR$/dense/divide.h" />
@@ -151,8 +224,11 @@
         <option value="$PROJECT_DIR$/common/mympi.h" />
         <option value="$PROJECT_DIR$/common/divide.h" />
         <option value="$PROJECT_DIR$/common/matrix_mul.h" />
-        <option value="$PROJECT_DIR$/sparse/main.c" />
         <option value="$PROJECT_DIR$/dense/main.c" />
+        <option value="$PROJECT_DIR$/common/type.h" />
+        <option value="$PROJECT_DIR$/sparse/main.c" />
+        <option value="$PROJECT_DIR$/dense/main_serial.c" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
       </list>
     </option>
   </component>
@@ -170,7 +246,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -186,11 +261,6 @@
             <path>
               <item name="matrix" type="b2602c69:ProjectViewProjectNode" />
               <item name="matrix" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="matrix" type="b2602c69:ProjectViewProjectNode" />
-              <item name="matrix" type="462c0819:PsiDirectoryNode" />
               <item name="dense" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -202,6 +272,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -238,7 +309,7 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="dense" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-np 4 dense.exe" WORKING_DIR="file://$PROJECT_DIR$/cmake-build-release" PASS_PARENT_ENVS_2="true" PROJECT_NAME="matrix" TARGET_NAME="dense" CONFIG_NAME="Release" RUN_PATH="D:/Program Files/Microsoft MPI/Bin/mpiexec.exe">
+    <configuration name="dense" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-np 1 dense.exe" WORKING_DIR="file://$PROJECT_DIR$/cmake-build-release" PASS_PARENT_ENVS_2="true" PROJECT_NAME="matrix" TARGET_NAME="dense" CONFIG_NAME="Release" RUN_PATH="D:/Program Files/Microsoft MPI/Bin/mpiexec.exe">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -271,7 +342,9 @@
       <workItem from="1538539644724" duration="447000" />
       <workItem from="1538540131338" duration="601000" />
       <workItem from="1538706318720" duration="3940000" />
-      <workItem from="1538804498095" duration="5282000" />
+      <workItem from="1538804498095" duration="5579000" />
+      <workItem from="1538812295905" duration="2735000" />
+      <workItem from="1538822761274" duration="3881000" />
     </task>
     <task id="LOCAL-00001" summary="代码重构">
       <created>1538407029490</created>
@@ -315,18 +388,32 @@
       <option name="project" value="LOCAL" />
       <updated>1538502000325</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="代码重构">
+      <created>1538809891710</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1538809891710</updated>
+    </task>
+    <task id="LOCAL-00008" summary="稀疏矩阵与向量的乘法">
+      <created>1538809950465</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1538809950465</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78021000" />
+    <option name="totallyTimeSpent" value="84934000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.2677761" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.2753404" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Terminal" order="1" />
@@ -335,7 +422,7 @@
       <window_info anchor="bottom" id="Messages" order="4" weight="0.32840723" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.32840723" />
-      <window_info anchor="bottom" id="Run" order="7" visible="true" weight="0.32840723" />
+      <window_info anchor="bottom" id="Run" order="7" weight="0.6699507" />
       <window_info anchor="bottom" id="Debug" order="8" weight="0.39901477" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="CMake" order="10" sideWeight="0.49924356" weight="0.32840723" />
@@ -356,9 +443,10 @@
       <path value="$PROJECT_DIR$/learning/AI/experiment" />
     </ignored-roots>
     <MESSAGE value="bug修正" />
-    <MESSAGE value="代码重构" />
     <MESSAGE value="自定义结构体用于消息收发" />
-    <option name="LAST_COMMIT_MESSAGE" value="自定义结构体用于消息收发" />
+    <MESSAGE value="代码重构" />
+    <MESSAGE value="稀疏矩阵与向量的乘法" />
+    <option name="LAST_COMMIT_MESSAGE" value="稀疏矩阵与向量的乘法" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/main1.c" />
@@ -384,30 +472,6 @@
     <entry file="file://$PROJECT_DIR$/matrix.mtx">
       <provider selected="true" editor-type-id="LargeFileEditor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/type.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="36" column="17" lean-forward="true" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
-          <folding>
-            <element signature="e#86#104#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-release/matrix.mtx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="14" column="9" lean-forward="true" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sparse/divide.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -422,13 +486,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sparse/matrix.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/sparse/matrix.h" />
     <entry file="file://$PROJECT_DIR$/common/mympi.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="279">
@@ -439,33 +497,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/divide.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="55" column="66" selection-start-line="55" selection-start-column="66" selection-end-line="55" selection-end-column="66" />
-          <folding>
-            <element signature="e#98#116#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/matrix_mul.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-release/result.mtx">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dense/result.mtx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2576">
-          <caret line="7" column="20" lean-forward="true" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-release/result.mtx" />
     <entry file="file://$PROJECT_DIR$/sparse/result-sparse.mtx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
@@ -473,37 +505,95 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-release/result-sparse.mtx">
+    <entry file="file://$PROJECT_DIR$/common/matrix_mul.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        <state relative-caret-position="463">
+          <caret line="33" column="1" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sparse/main.c">
+    <entry file="file://$PROJECT_DIR$/cmake-build-release/matrix.mtx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="53" column="30" selection-start-line="53" selection-start-column="30" selection-end-line="53" selection-end-column="30" />
+        <state relative-caret-position="288">
+          <caret line="18" column="9" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/type.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="70" column="23" selection-start-line="70" selection-start-column="23" selection-end-line="70" selection-end-column="23" />
           <folding>
-            <element signature="e#40#58#0" expanded="true" />
+            <element signature="e#86#104#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-release/result-dense.mtx">
+    <entry file="file://$PROJECT_DIR$/cmake-build-release/result-sparse.mtx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
           <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dense/main.c">
+    <entry file="file://$PROJECT_DIR$/sparse/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="41" column="10" lean-forward="true" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
+        <state relative-caret-position="207">
+          <caret line="43" column="56" selection-start-line="43" selection-start-column="56" selection-end-line="43" selection-end-column="56" />
+          <folding>
+            <element signature="e#40#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dense/main_serial.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="e#40#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dense/main_mpi.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/divide.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-160">
+          <caret line="17" column="49" selection-start-line="17" selection-start-column="49" selection-end-line="17" selection-end-column="49" />
+          <folding>
+            <element signature="e#98#116#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="35" lean-forward="true" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dense/result.mtx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-release/result-dense.mtx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>

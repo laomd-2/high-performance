@@ -23,14 +23,13 @@ DoubleArray dense_mat_vect_mult(DoubleArray local_A, DoubleArray local_x, int n)
     return local_y;
 }
 
-void sparse_mat_vec_mul(MatrixElem local_A[], int size, DoubleArray x, DoubleArray local_y) {
-//    printf("m=%d ", local_y.size);
+void sparse_mat_vec_mul(MatrixElem local_A[], int size,
+        DoubleArray x,
+        DoubleArray local_y) {
     for (int i = 0; i < size; ++i) {
         int row = local_A[i].i;
         int col = local_A[i].j;
-//        printf("%d %d, ", row, col);
         local_y.A[row - 1] += local_A[i].value * x.A[col - 1];
     }
-//    printf("\n");
 }
 #endif //MATRIX_MATRIX_H

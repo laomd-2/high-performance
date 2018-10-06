@@ -35,10 +35,12 @@ int main() {
     int local_size;
     MatrixElem *local_A = divide_on_elem(matrix, matrix_size[2], MPI_COMM_WORLD, &local_size);
     fclose(matrix);
+    printf("for process %d:\n", info.rank);
 
     //    2、局部矩阵与全局向量相乘
     DoubleArray local_y = malloc_array(matrix_size[0]);
     MPI_Wait(&request, MPI_STATUS_IGNORE);
+
     sparse_mat_vec_mul(local_A, local_size, x, local_y);
     free(local_A);
 

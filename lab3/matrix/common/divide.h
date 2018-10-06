@@ -15,31 +15,32 @@ DoubleArray divide_on_row(FILE *file, int cnt, int m, int n, MPI_Comm comm) {
 
     int *v = get_v(m, info.comm_size);
     DoubleArray res = malloc_array(v[info.rank] * n);
-
-    DoubleArray global_one_col;
-    if (info.rank == 0)
-        global_one_col = malloc_array(m);
-
     DoubleArray tmp = malloc_array(v[info.rank]);
 
+    DoubleArray global_one_col;
+    if (info.rank == 0)   // 只有0号进程需要读入数据
+        global_one_col = malloc_array(m);
     for (int i = 0; i < n; ++i) {
         int row, col;
         double entry;
         if (info.rank == 0) {
+            // 读入一列
             while (cnt--) {
                 fscanf(file, "%d %d %lf", &row, &col, &entry);
                 if (col == i + 1) {
                     global_one_col.A[row - 1] = entry;
-                } else
+                } else    // 一列结束
                     break;
             }
         }
+        // 异步分发
         MPI_Request request;
         Iscatterv(global_one_col, tmp, comm, 0, &request);
         MPI_Wait(&request, MPI_STATUS_IGNORE);
+        // 转置
         for (int j = 0; j < tmp.size; ++j)
             res.A[j * n + i] = tmp.A[j];
-
+        // 列结束推出循环时已经读入了下一列的第一行
         if (info.rank == 0) {
             clear(global_one_col);
             global_one_col.A[row - 1] = entry;
