@@ -25,15 +25,15 @@ struct MatrixElem {
     int j;
     double value;
 
-    friend istream& operator>>(istream& fin, const MatrixElem&);
+    friend istream& operator>>(istream& fin, MatrixElem&);
 
     friend ostream& operator<<(ostream& out, const MatrixElem&);
 
-    bool operator==(const MatrixElem& other) {
+    bool operator==(const MatrixElem& other) const {
         return i == other.i && j == other.j && value == other.value;
     }
 
-    bool operator!=(const MatrixElem& other) {
+    bool operator!=(const MatrixElem& other) const {
         return !(*this == other);
     }
 };

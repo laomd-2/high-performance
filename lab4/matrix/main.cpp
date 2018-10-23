@@ -3,8 +3,8 @@
 //
 #include <iostream>
 #include <fstream>
-#include <divide.h>
-#include <matrix_mul.h>
+#include <divide.hpp>
+#include <matrix_mul.hpp>
 #include <vector_io.hpp>
 using namespace std;
 
@@ -15,8 +15,8 @@ int main() {
     ifstream matrix, vector_;
     int matrix_size[4];
     if (info.rank == 0) {
-        matrix.open("matrix.mtx");
-        vector_.open("vector.mtx");
+        matrix.open("../data/matrix.mtx");
+        vector_.open("../data/vector.mtx");
         if (matrix.is_open() && vector_.is_open()) {
             vector_ >> matrix_size[1] >> matrix_size[0] >> matrix_size[3];
             matrix >> matrix_size[0] >> matrix_size[1] >> matrix_size[2];
@@ -41,17 +41,20 @@ int main() {
     Ibcast(x, MPI_DOUBLE, 0, MPI_COMM_WORLD, &request);
 
     //    1、任务划分
-    vector<MatrixElem> local_A = divide_on_elem(matrix, matrix_size[2], MPI_COMM_WORLD);
-
+//    vector<MatrixElem> local_A = divide_scatter(matrix, matrix_size[2], MPI_COMM_WORLD);
+    vector<MatrixElem> local_A = divide_onebyone(matrix, matrix_size[2], MPI_COMM_WORLD);
     matrix.close();
 
-    //    2、局部矩阵与全局向量相乘
-    vector<double> local_y(matrix_size[0]);
-    MPI_Wait(&request, MPI_STATUS_IGNORE);
+//    if (info.rank == 0)
+//        cout << local_A;
 
+    //    2、局部矩阵与全局向量相乘
+    MPI_Wait(&request, MPI_STATUS_IGNORE);
+    vector<double> local_y(matrix_size[0]);
     sparse_mat_vec_mul(local_A, x, local_y);
+
 //    printf("for progress %d\n", info.rank);
-//    debug(local_y);
+//    debug(local_A);
 
     //    3、任务聚合
     vector<double> global_y = Reduce(local_y, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);

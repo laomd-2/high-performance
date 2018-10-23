@@ -84,4 +84,24 @@ void Allgatherv(const vector<T>& local, vector<T> global, MPI_Datatype datatype,
     MPI_Allgatherv(local.data(), local.size(), datatype,
             global.data(), v.data(), disp.data(), datatype, comm);
 }
+
+template <typename T>
+void Isend(const vector<T>& sendbuf, MPI_Datatype datatype,
+        int tag, int dest, MPI_Comm comm, MPI_Request *request) {
+    MPI_Isend(sendbuf.data(), sendbuf.size(), datatype,
+            dest, tag, comm, request);
+}
+
+template <typename T>
+void Send(const vector<T>& sendbuf, MPI_Datatype datatype,
+           int tag, int dest, MPI_Comm comm) {
+    MPI_Send(sendbuf.data(), sendbuf.size(), datatype,
+              dest, tag, comm);
+}
+
+template <typename T>
+void Recv(vector<T>& recvbuf, MPI_Datatype datatype,
+          int src, int tag, MPI_Comm comm, MPI_Status *status) {
+    MPI_Recv(recvbuf.data(), recvbuf.size(), datatype, src, tag, comm, status);
+}
 #endif //MATRIX_MSG_H
