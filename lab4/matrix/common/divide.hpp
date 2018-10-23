@@ -7,9 +7,9 @@
 
 #include <istream>
 #include <vector>
-#include <type.h>
-#include <msg.h>
-#include <mympi.h>
+#include <type.hpp>
+#include <msg.hpp>
+#include <mympi.hpp>
 using namespace std;
 
 vector<MatrixElem> divide_on_elem(istream& fin, int num_elems, MPI_Comm comm) {

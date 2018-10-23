@@ -5,7 +5,7 @@
 #ifndef MATRIX_MATRIX_H
 #define MATRIX_MATRIX_H
 
-#include <msg.h>
+#include <msg.hpp>
 #include <vector_io.hpp>
 
 void sparse_mat_vec_mul(const vector<MatrixElem>& local_A,

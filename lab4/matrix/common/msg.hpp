@@ -7,7 +7,7 @@
 
 #include <mpi.h>
 #include <vector>
-#include <type.h>
+#include <type.hpp>
 using namespace std;
 
 vector<int> get_v(int m, int comm_size) {
