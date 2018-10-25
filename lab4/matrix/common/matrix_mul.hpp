@@ -6,7 +6,7 @@
 #define MATRIX_MATRIX_H
 
 #include <msg.hpp>
-#include <vector_io.hpp>
+#include <vector_manip.hpp>
 
 void sparse_mat_vec_mul(const vector<MatrixElem>& local_A,
         const vector<double>& x,

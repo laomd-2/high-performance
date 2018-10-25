@@ -45,4 +45,5 @@ istream& operator>>(istream& fin, MatrixElem& a) {
 ostream& operator<<(ostream& out, const MatrixElem& a) {
     return out << "(" << a.i << ',' << a.j << ',' << a.value << ')';
 }
+
 #endif //MATRIX_TYPE_H

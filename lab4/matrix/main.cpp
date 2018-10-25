@@ -5,17 +5,18 @@
 #include <fstream>
 #include <divide.hpp>
 #include <matrix_mul.hpp>
-#include <vector_io.hpp>
+#include <vector_manip.hpp>
 using namespace std;
 
 int main() {
     Init(0, 0);
     Comm_Info info(MPI_COMM_WORLD);
 
+    const char *matrix_file = "../data/matrix.mtx";
     ifstream matrix, vector_;
     int matrix_size[4];
     if (info.rank == 0) {
-        matrix.open("../data/matrix.mtx");
+        matrix.open(matrix_file);
         vector_.open("../data/vector.mtx");
         if (matrix.is_open() && vector_.is_open()) {
             vector_ >> matrix_size[1] >> matrix_size[0] >> matrix_size[3];
@@ -42,7 +43,8 @@ int main() {
 
     //    1、任务划分
 //    vector<MatrixElem> local_A = divide_scatter(matrix, matrix_size[2], MPI_COMM_WORLD);
-    vector<MatrixElem> local_A = divide_onebyone(matrix, matrix_size[2], MPI_COMM_WORLD);
+//    vector<MatrixElem> local_A = divide_onebyone(matrix, matrix_size[2], MPI_COMM_WORLD);
+    vector<MatrixElem> local_A = divide_pipeline(matrix, matrix_size[2], MPI_COMM_WORLD, 4);
     matrix.close();
 
 //    if (info.rank == 0)

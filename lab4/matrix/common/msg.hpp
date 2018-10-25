@@ -8,26 +8,8 @@
 #include <mpi.h>
 #include <vector>
 #include <type.hpp>
+#include <vector_manip.hpp>
 using namespace std;
-
-vector<int> get_v(int m, int comm_size) {
-    vector<int> v(comm_size);
-    int local_m = m / comm_size;
-    int remain = m % comm_size;
-    for (int i = 0; i < comm_size; ++i) {
-        v[i] = local_m + (int)(i < remain);
-    }
-    return v;
-}
-
-vector<int> get_disp(const vector<int>& v, int comm_size) {
-    vector<int> disp(comm_size);
-    disp[0] = 0;
-    for (int i = 1; i < comm_size; ++i) {
-        disp[i] = disp[i - 1] + v[i - 1];
-    }
-    return disp;
-}
 
 template <typename T>
 void Iscatterv(const vector<T>& global, vector<T>& local, MPI_Datatype datatype,
