@@ -15,6 +15,7 @@
 #include <threaded_queue.hpp>
 using namespace std;
 
+// 主进程读，逐一发给其他进程
 vector<MatrixElem> divide_onebyone(istream &fin, int num_elems, MPI_Comm comm) {
     Comm_Info info(comm);
     vector<int> balance = get_v(num_elems, info.comm_size);
@@ -44,16 +45,37 @@ vector<MatrixElem> divide_onebyone(istream &fin, int num_elems, MPI_Comm comm) {
     return local_A;
 }
 
+// 分发的形式,主线程读完所有元素,然后分发
+vector<MatrixElem> divide_scatter(istream &fin, int num_elems, MPI_Comm comm) {
+    Comm_Info info(comm);
+    vector<MatrixElem> array;
+    if (info.rank == 0) {
+        array = vector<MatrixElem>(num_elems);
+        for (int i = 0; i < num_elems; i++)
+            fin >> array[i];
+    }
+    vector<int> balance = get_v(num_elems, info.comm_size);
+    vector<MatrixElem> local_A;
+
+    if (balance[info.rank]) {
+        local_A = vector<MatrixElem>(balance[info.rank]);
+        Scatterv(array, local_A, MPI_MATRIX_ELEM, 0, MPI_COMM_WORLD);
+    }
+    return local_A;
+}
+
+
+// 流水线发送，主进程的多个线程读，多个线程发送
 namespace {
+    // 生产者线程需要的参数
     struct ProParam {
+        Prefix prefix;
         string filename;
-        int offset;
         const int* fields;
-        vector<int> v;
-        int begin_rank;
         ThreadedQueue<pair<int, vector<MatrixElem>>>* q;
     };
 
+    // 消费者线程需要的参数
     struct ConsParam {
         vector<MatrixElem>& local_A;
         MPI_Comm comm;
@@ -62,14 +84,15 @@ namespace {
     };
 }
 
+// 生产者函数
 void *producer(void *para) {
     auto param = (ProParam*)para;
     ifstream fin(param->filename);
     const int* fields = param->fields;
 
     int line_width = (fields[0] + fields[1] + fields[2]);
-    fin.seekg((param->offset + 1) * line_width, ios::beg);
-    vector<int>& v = param->v;
+    fin.seekg((param->prefix.prefix_sum + 1) * line_width, ios::beg);
+    vector<int>& v = param->prefix.range;
     ThreadedQueue<pair<int, vector<MatrixElem>>>& q = *(param->q);
 
     vector<MatrixElem> buffer;
@@ -91,7 +114,7 @@ void *producer(void *para) {
             buffer[i].value = atof(c);
 //            cout << buffer[i] << endl;
         }
-        q.put(make_pair(rank + param->begin_rank, buffer));
+        q.put(make_pair(rank + param->prefix.begin_index, buffer));
         delete[] a;
         delete[] b;
         delete[] c;
@@ -99,6 +122,7 @@ void *producer(void *para) {
     return nullptr;
 }
 
+// 消费者函数
 void *consumer(void *para) {
     auto param = (ConsParam*)para;
     vector<MatrixElem>& local_A = param->local_A;
@@ -117,8 +141,8 @@ void *consumer(void *para) {
 }
 
 vector<MatrixElem> divide_pipeline(const char *filename, const int* field_offsets,
-        int num_elems, MPI_Comm comm,
-        const int num_pros=1, const int num_cons=1) {
+                                   int num_elems, MPI_Comm comm,
+                                   const int num_pros=1, const int num_cons=1) {
     Comm_Info info(comm);
     vector<int> balance = get_v(num_elems, info.comm_size);
 
@@ -127,24 +151,17 @@ vector<MatrixElem> divide_pipeline(const char *filename, const int* field_offset
         ThreadedQueue<pair<int, vector<MatrixElem>>> q;
         pthread_t tids[num_pros + num_cons];
 
-        vector<int> v = get_v(info.comm_size, num_pros);
-        auto it = balance.begin();
-        int last = 0, last_rank = 0;
-        ProParam params[num_pros];
+        vector<Prefix> prefixes = get_prefix(balance, num_pros);
+        vector<ProParam> params(num_pros);
         for (int i = 0; i < num_pros; ++i) {
+            params[i].prefix = prefixes[i];
             params[i].filename = filename;
-            params[i].offset = last;
             params[i].fields = field_offsets;
             params[i].q = &q;
-            params[i].v = vector<int>(it, it + v[i]);
-            params[i].begin_rank = last_rank;
-            pthread_create(tids + i, nullptr, producer, params + i);
-            last = accumulate(it, it + v[i], last);
-            it += v[i];
-            last_rank += v[i];
+            pthread_create(tids + i, nullptr, producer, &(params[i]));
         }
 
-        v = get_v(info.comm_size, num_cons);
+        vector<int> v = get_v(info.comm_size, num_cons);
         for (int j = 0; j < num_cons; ++j) {
             ConsParam p2{local_A, comm, v[j], q};
             pthread_create(tids + num_pros + j, nullptr, consumer, &p2);
@@ -159,22 +176,8 @@ vector<MatrixElem> divide_pipeline(const char *filename, const int* field_offset
     return local_A;
 }
 
-vector<MatrixElem> divide_scatter(istream &fin, int num_elems, MPI_Comm comm) {
-    Comm_Info info(comm);
-    vector<MatrixElem> array;
-    if (info.rank == 0) {
-        array = vector<MatrixElem>(num_elems);
-        for (int i = 0; i < num_elems; i++)
-            fin >> array[i];
-    }
-    vector<int> balance = get_v(num_elems, info.comm_size);
-    vector<MatrixElem> local_A;
+vector<MatrixElem> divide_read_directly(const char *filename, const int* field_offsets,
+                                   int num_elems, MPI_Comm comm) {
 
-    if (balance[info.rank]) {
-        local_A = vector<MatrixElem>(balance[info.rank]);
-        Scatterv(array, local_A, MPI_MATRIX_ELEM, 0, MPI_COMM_WORLD);
-    }
-    return local_A;
 }
-
 #endif //MATRIX_DISTRIBUTE_H

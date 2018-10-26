@@ -47,6 +47,28 @@ vector<int> get_disp(const vector<int>& v, int comm_size) {
     return disp;
 }
 
+struct Prefix {
+    int begin_index;
+    vector<int> range;
+    int prefix_sum;
+};
+
+vector<Prefix> get_prefix(const vector<int>& balance, int num_pros) {
+    vector<int> v = get_v(balance.size(), num_pros);
+    auto it = balance.begin();
+    int last = 0, last_rank = 0;
+    vector<Prefix> params(num_pros);
+    for (int i = 0; i < num_pros; ++i) {
+        params[i].prefix_sum = last;
+        params[i].range = vector<int>(it, it + v[i]);
+        params[i].begin_index = last_rank;
+        last = accumulate(it, it + v[i], last);
+        it += v[i];
+        last_rank += v[i];
+    }
+    return params;
+}
+
 template <typename T>
 vector<vector<T>> to_2d(const vector<T>& arr, int n) {
     vector<vector<T>> res;
