@@ -11,6 +11,7 @@
 #include <type.hpp>
 #include <msg.hpp>
 #include <mympi.hpp>
+#include <io.hpp>
 #include <threaded_queue.hpp>
 using namespace std;
 
@@ -45,9 +46,12 @@ vector<MatrixElem> divide_onebyone(istream &fin, int num_elems, MPI_Comm comm) {
 
 namespace {
     struct ProParam {
-        istream& fin;
-        vector<int>& v;;
-        ThreadedQueue<pair<int, vector<MatrixElem>>>& q;
+        string filename;
+        int offset;
+        const int* fields;
+        vector<int> v;
+        int begin_rank;
+        ThreadedQueue<pair<int, vector<MatrixElem>>>* q;
     };
 
     struct ConsParam {
@@ -60,19 +64,37 @@ namespace {
 
 void *producer(void *para) {
     auto param = (ProParam*)para;
-    istream& fin = param->fin;
+    ifstream fin(param->filename);
+    const int* fields = param->fields;
+
+    int line_width = (fields[0] + fields[1] + fields[2]);
+    fin.seekg((param->offset + 1) * line_width, ios::beg);
     vector<int>& v = param->v;
-    ThreadedQueue<pair<int, vector<MatrixElem>>>& q = param->q;
+    ThreadedQueue<pair<int, vector<MatrixElem>>>& q = *(param->q);
 
     vector<MatrixElem> buffer;
     buffer.reserve(v[0]);
+
     for (int rank = 0; rank < v.size(); rank++) {
         int balance = v[rank];
         buffer.resize(balance);
+
+        auto * a = new char[fields[0]]{0};
+        auto * b = new char[fields[1]]{0};
+        auto * c = new char[fields[2]]{0};
         for (int i = 0; i < balance; ++i) {
-            fin >> buffer[i];
+            fin.read(a, fields[0]);
+            fin.read(b, fields[1]);
+            fin.read(c, fields[2]);
+            buffer[i].i = atoi(a);
+            buffer[i].j = atoi(b);
+            buffer[i].value = atof(c);
+//            cout << buffer[i] << endl;
         }
-        q.put(make_pair(rank, buffer));
+        q.put(make_pair(rank + param->begin_rank, buffer));
+        delete[] a;
+        delete[] b;
+        delete[] c;
     }
     return nullptr;
 }
@@ -94,23 +116,38 @@ void *consumer(void *para) {
     return nullptr;
 }
 
-vector<MatrixElem> divide_pipeline(istream& fin, int num_elems, MPI_Comm comm,
-        const int num_cons=1) {
+vector<MatrixElem> divide_pipeline(const char *filename, const int* field_offsets,
+        int num_elems, MPI_Comm comm,
+        const int num_pros=1, const int num_cons=1) {
     Comm_Info info(comm);
     vector<int> balance = get_v(num_elems, info.comm_size);
 
     vector<MatrixElem> local_A(balance[info.rank]);
     if (info.rank == 0) {
         ThreadedQueue<pair<int, vector<MatrixElem>>> q;
-        pthread_t tids[1 + num_cons];
+        pthread_t tids[num_pros + num_cons];
 
-        ProParam p1{fin, balance, q};
-        pthread_create(tids, nullptr, producer, &(p1));
+        vector<int> v = get_v(info.comm_size, num_pros);
+        auto it = balance.begin();
+        int last = 0, last_rank = 0;
+        ProParam params[num_pros];
+        for (int i = 0; i < num_pros; ++i) {
+            params[i].filename = filename;
+            params[i].offset = last;
+            params[i].fields = field_offsets;
+            params[i].q = &q;
+            params[i].v = vector<int>(it, it + v[i]);
+            params[i].begin_rank = last_rank;
+            pthread_create(tids + i, nullptr, producer, params + i);
+            last = accumulate(it, it + v[i], last);
+            it += v[i];
+            last_rank += v[i];
+        }
 
-        vector<int> v = get_v(info.comm_size, num_cons);
+        v = get_v(info.comm_size, num_cons);
         for (int j = 0; j < num_cons; ++j) {
             ConsParam p2{local_A, comm, v[j], q};
-            pthread_create(tids + 1 + j, nullptr, consumer, &p2);
+            pthread_create(tids + num_pros + j, nullptr, consumer, &p2);
         }
 
         for (pthread_t tid : tids) {
