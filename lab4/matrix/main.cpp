@@ -15,8 +15,8 @@ int main() {
     ifstream matrix, vector_;
     int matrix_size[4];
     if (info.rank == 0) {
-        matrix.open("../test/matrix.mtx");
-        vector_.open("../test/vector.mtx");
+        matrix.open("../data/matrix.mtx");
+        vector_.open("../data/vector.mtx");
         if (matrix.is_open() && vector_.is_open()) {
             vector_ >> matrix_size[1] >> matrix_size[0] >> matrix_size[3];
             matrix >> matrix_size[0] >> matrix_size[1] >> matrix_size[2];
@@ -44,8 +44,10 @@ int main() {
 //    vector<MatrixElem> local_A = divide_scatter(matrix, matrix_size[2], MPI_COMM_WORLD);
 //    vector<MatrixElem> local_A = divide_onebyone(matrix, matrix_size[2], MPI_COMM_WORLD);
     int offsets[3] = {8, 8, 30};
-    vector<MatrixElem> local_A = divide_pipeline("../test/matrix2.mtx", offsets, matrix_size[2],
-            MPI_COMM_WORLD, 2, 4);
+//    vector<MatrixElem> local_A = divide_pipeline("../test/matrix2.mtx", offsets, matrix_size[2],
+//            MPI_COMM_WORLD, 2, 4);
+    vector<MatrixElem> local_A = divide_read_directly("../data/matrix2.mtx", offsets, matrix_size[2],
+                                                 MPI_COMM_WORLD);
     matrix.close();
 
 //    if (info.rank == 0)

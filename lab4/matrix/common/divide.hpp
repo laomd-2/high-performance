@@ -128,10 +128,11 @@ void *consumer(void *para) {
     vector<MatrixElem>& local_A = param->local_A;
     MPI_Comm comm = param->comm;
     ThreadedQueue<pair<int, vector<MatrixElem>>>& q = param->q;
+    Comm_Info info(comm);
 
     for (int i = 0; i < param->work; ++i) {
         auto x = q.get();
-        if (x.first == 0) {
+        if (x.first == info.rank) {
             local_A = x.second;
         } else {
             Send(x.second, MPI_MATRIX_ELEM, x.first, x.first, comm);
@@ -178,6 +179,18 @@ vector<MatrixElem> divide_pipeline(const char *filename, const int* field_offset
 
 vector<MatrixElem> divide_read_directly(const char *filename, const int* field_offsets,
                                    int num_elems, MPI_Comm comm) {
+    Comm_Info info(comm);
+    vector<int> balance = get_v(num_elems, info.comm_size);
 
+    vector<MatrixElem> local_A(balance[info.rank]);
+    vector<Prefix> prefixes = get_prefix(balance, info.comm_size);
+
+    ThreadedQueue<pair<int, vector<MatrixElem>>> q;
+    ProParam param = {prefixes[info.rank], filename, field_offsets, &q};
+    producer(&param);
+
+    ConsParam p2{local_A, comm, 1, q};
+    consumer(&p2);
+    return local_A;
 }
 #endif //MATRIX_DISTRIBUTE_H
