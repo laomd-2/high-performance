@@ -1,0 +1,6 @@
+#PBS -N lab5.Hg
+#PBS -l nodes=2:ppn=56
+#PBS -q students
+
+cd $PBS_O_WORKDIR 
+for i in 16; do let "m=n=2**$i"; for p in 2 4 8 16 32 64; do if [[ $p -le $m*$n  ]]; then mpirun -n $p ./main $m $n; fi; done; done

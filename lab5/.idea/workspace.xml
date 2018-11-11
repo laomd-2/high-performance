@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
+    <generated>
+      <config projectName="matrix" targetName="matrix" />
+    </generated>
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="aa65fe09-f7b2-491e-8662-0f6d6cf72286" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matrix/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matrix/common/divide.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matrix/common/matrix_mul.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matrix/common/msg.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matrix/common/mympi.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matrix/common/type.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matrix/common/vector_manip.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/matrix/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/build/report.aux" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/build/report.bbl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/build/report.blg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/build/report.fdb_latexmk" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/build/report.fls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/build/report.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/build/report.xdv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/c0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/c1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/c2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/c3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/c4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/naive_rotate" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/p0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/p1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/p2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/p3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/p4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/perf.data" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/perf.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/report.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/report.synctex.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/report.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/sample.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab1/svg.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab2/report/build/lab2.fdb_latexmk" beforeDir="false" afterPath="$PROJECT_DIR$/../lab2/report/build/lab2.fdb_latexmk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/matrix/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/matrix/.idea/matrix.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/matrix/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/matrix/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/matrix/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/matrix/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/matrix/report.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/matrix/report.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/matrix/result-dense.mtx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/matrix/result-sparse.mtx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/matrix/test.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/实验报告.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab4/matrix/common/divide.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../lab4/matrix/common/divide.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab4/matrix/common/threaded_queue.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../lab4/matrix/common/threaded_queue.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab4/matrix/common/vector_manip.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../lab4/matrix/common/vector_manip.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab4/matrix/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../lab4/matrix/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab4/matrix/result-sparse-true.mtx" beforeDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/matrix/cmake-build-debug/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FUSProjectUsageTrigger">
+    <session id="-225230443">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="c" value="1" />
+          <entry key="cpp" value="1" />
+          <entry key="h" value="1" />
+          <entry key="hpp" value="7" />
+          <entry key="txt" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CMakeLists.txt" value="1" />
+          <entry key="ObjectiveC" value="10" />
+          <entry key="PLAIN_TEXT" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="cpp" value="792" />
+          <entry key="h" value="6" />
+          <entry key="hpp" value="1103" />
+          <entry key="txt" value="12" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="CMakeLists.txt" value="12" />
+          <entry key="ObjectiveC" value="1901" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/matrix/main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="239">
+              <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/matrix/common/divide.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="720">
+              <caret line="45" column="37" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
+              <folding>
+                <element signature="e#98#116#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/matrix/common/msg.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="263">
+              <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+              <folding>
+                <element signature="e#723#735#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/matrix/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="128">
+              <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/matrix/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/matrix/common/matrix_mul.h" />
+        <option value="$PROJECT_DIR$/matrix/common/matrix_mul.hpp" />
+        <option value="$PROJECT_DIR$/matrix/common/divide.hpp" />
+        <option value="$PROJECT_DIR$/matrix/common/msg.hpp" />
+        <option value="$PROJECT_DIR$/matrix/common/vector_manip.hpp" />
+        <option value="$PROJECT_DIR$/matrix/main.cpp" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="678" />
+    <option name="y" value="38" />
+    <option name="width" value="681" />
+    <option name="height" value="701" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="matrix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lab5" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="matrix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lab5" type="462c0819:PsiDirectoryNode" />
+              <item name="matrix" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="matrix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lab5" type="462c0819:PsiDirectoryNode" />
+              <item name="matrix" type="462c0819:PsiDirectoryNode" />
+              <item name="cmake-build-debug" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="matrix" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lab5" type="462c0819:PsiDirectoryNode" />
+              <item name="matrix" type="462c0819:PsiDirectoryNode" />
+              <item name="result" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="D:/Program Files/Microsoft MPI/Bin/mpiexec.exe" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\learning\high-performance-computing\lab5\matrix\common" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.matrix">
+    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="cart_test" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-np 4 matrix.exe" PASS_PARENT_ENVS_2="true" PROJECT_NAME="matrix" TARGET_NAME="cart_test" CONFIG_NAME="Debug" RUN_PATH="D:/Program Files/Microsoft MPI/Bin/mpiexec.exe">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="matrix" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-np 4 matrix.exe" WORKING_DIR="file://$PROJECT_DIR$/matrix/cmake-build-debug" PASS_PARENT_ENVS_2="true" PROJECT_NAME="matrix" TARGET_NAME="matrix" CONFIG_NAME="Debug" RUN_PATH="D:/Program Files/Microsoft MPI/Bin/mpiexec.exe">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Build All" />
+      <item itemvalue="Application.cart_test" />
+      <item itemvalue="Application.matrix" />
+    </list>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="aa65fe09-f7b2-491e-8662-0f6d6cf72286" name="Default Changelist" comment="" />
+      <created>1541062479954</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1541062479954</updated>
+      <workItem from="1541062484426" duration="4243000" />
+      <workItem from="1541069773443" duration="1443000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="5686000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25340393" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32840723" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.32840723" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="CMake" order="12" weight="0.32840723" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/matrix/common/matrix_mul.h" />
+    <entry file="file://$PROJECT_DIR$/matrix/common/matrix_mul.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matrix/common/divide.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="45" column="37" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
+          <folding>
+            <element signature="e#98#116#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matrix/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../lab4/matrix/common/msg.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="48" column="1" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matrix/common/msg.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+          <folding>
+            <element signature="e#723#735#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matrix/common/vector_manip.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="583">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matrix/cart_test.c">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../lab4/matrix/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1045" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matrix/cmake-build-debug/result.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matrix/result/4x4.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matrix/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
