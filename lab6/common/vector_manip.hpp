@@ -25,10 +25,9 @@ ostream& operator<<(ostream& out, const vector<vector<T>>& array) {
     return out;
 }
 
-
-vector<int> get_v(int m, int comm_size) {
-    vector<int> v(comm_size);
-    int local_m = m / comm_size;
+vector<uint_fast64_t> get_v(uint_fast64_t m, int comm_size) {
+    vector<uint_fast64_t> v(comm_size);
+    uint_fast64_t local_m = m / comm_size;
     int remain = m % comm_size;
     for (int i = 0; i < comm_size; ++i) {
         v[i] = local_m + (int)(i < remain);
@@ -46,18 +45,9 @@ vector<int> get_disp(const vector<int>& v, int comm_size) {
 }
 
 template <typename T>
-vector<T> prefix_sum(const vector<T>& arr) {
-    vector<int> prefix_sums(arr.size() + 1, 0);
-    for (int i = 0; i < arr.size(); ++i) {
-        prefix_sums[i + 1] = prefix_sums[i] + arr[i];
-    }
-    return prefix_sums;
-}
-
-template <typename T>
-vector<T> samples(const vector<T>& a, int n, int offset = 0) {
+vector<T> copy_every_n(const vector<T> &a, uint_fast64_t n, uint_fast64_t offset = 0) {
     vector<T> result;
-    int tmp = 0;
+    uint_fast64_t tmp = 0;
     copy_if(a.begin() + offset, a.end(), std::back_inserter(result), [&](T num) {
         if (tmp == 0) {
             tmp = n - 1;

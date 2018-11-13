@@ -10,9 +10,9 @@
 #include <ostream>
 using namespace std;
 
-#ifndef __int64
-#define __int64 long long
-#endif
+//#ifndef uint_fast64_t
+//#define uint_fast64_t unsigned long long
+//#endif
 
 struct Comm_Info {
     int rank;
