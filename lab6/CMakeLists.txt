@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.12)
 project(lab6)
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
-include_directories("D:/Program Files (x86)/Microsoft SDKs/MPI/Include")
+find_package(MPI REQUIRED)
+include_directories(${MPI_INCLUDE_PATH})
 include_directories("common")
-link_directories("D:/Program Files (x86)/Microsoft SDKs/MPI/Lib/x64")
 
 add_executable(lab6 main.cpp)
-add_executable(get_data get_data.cpp)
-target_link_libraries(lab6 msmpi)
+target_link_libraries(lab6 ${MPI_LIBRARIES})

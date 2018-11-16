@@ -25,9 +25,10 @@ ostream& operator<<(ostream& out, const vector<vector<T>>& array) {
     return out;
 }
 
-vector<uint_fast64_t> get_v(uint_fast64_t m, int comm_size) {
-    vector<uint_fast64_t> v(comm_size);
-    uint_fast64_t local_m = m / comm_size;
+template <typename T=int>
+vector<T> get_v(uint_fast64_t m, int comm_size) {
+    vector<T> v(comm_size);
+    T local_m = m / comm_size;
     int remain = m % comm_size;
     for (int i = 0; i < comm_size; ++i) {
         v[i] = local_m + (int)(i < remain);
@@ -35,10 +36,12 @@ vector<uint_fast64_t> get_v(uint_fast64_t m, int comm_size) {
     return v;
 }
 
-vector<int> get_disp(const vector<int>& v, int comm_size) {
-    vector<int> disp(comm_size);
+template <typename T, typename U=T>
+vector<U> get_prefix_sum(const vector<T> &v) {
+    size_t comm_size = v.size();
+    vector<U> disp(comm_size);
     disp[0] = 0;
-    for (int i = 1; i < comm_size; ++i) {
+    for (size_t i = 1; i < comm_size; ++i) {
         disp[i] = disp[i - 1] + v[i - 1];
     }
     return disp;
@@ -75,4 +78,5 @@ vector<vector<T>> divide(const vector<T>& a, const vector<T>& d) {
     res.push_back(vector<T>(it, a.end()));
     return res;
 }
+
 #endif //MATRIX_MSG_HPP

@@ -23,7 +23,7 @@ vector<int> Gatherv(const vector<T>& local, vector<T>& global, MPI_Datatype data
     vector<int> v(info.comm_size);
     uint_fast64_t size = local.size();
     MPI_Allgather(&size, 1, MPI_INT, v.data(), 1, MPI_INT, comm);
-    vector<int> disp = get_disp(v, info.comm_size);
+    vector<int> disp = get_prefix_sum(v);
     if (info.rank == root)
         global.resize((accumulate(v.begin(), v.end(), 0)));
     MPI_Gatherv(local.data(), local.size(), datatype,

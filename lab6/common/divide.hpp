@@ -15,7 +15,7 @@ using namespace std;
 
 vector<uint_fast64_t> divide_by_element(istream& in, uint_fast64_t n, MPI_Comm comm) {
     Comm_Info info(comm);
-    vector<uint_fast64_t> balances = get_v(n, info.comm_size);
+    vector<int> balances = get_v(n, info.comm_size);
 
     vector<uint_fast64_t> local;
     if (info.rank == 0) {
@@ -40,4 +40,17 @@ vector<uint_fast64_t> divide_by_element(istream& in, uint_fast64_t n, MPI_Comm c
     return local;
 }
 
+vector<uint_fast64_t> divide_read_directly(istream& in, uint_fast64_t n, MPI_Comm comm) {
+    Comm_Info info(comm);
+    vector<uint_fast64_t> balance = get_v<uint_fast64_t>(n, info.comm_size);
+
+    uint_fast64_t my_balance = balance[info.rank];
+    vector<uint_fast64_t> local_A(my_balance);
+    vector<uint_fast64_t> prefixes = get_prefix_sum<uint_fast64_t>(balance);
+
+    in.seekg((prefixes[info.rank] + 1) * 8, ios::beg);
+    for (auto& x: local_A)
+        read(in, x);
+    return local_A;
+}
 #endif //MATRIX_DISTRIBUTE_H
