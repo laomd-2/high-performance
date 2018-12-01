@@ -30,8 +30,7 @@ int main(int argc, char* argv[]) {
 
     vector<uint_fast64_t> local = divide_read_directly(fin, n, MPI_COMM_WORLD);
     fin.close();
-    make_heap(local.begin(), local.end());
-    sort_heap(local.begin(), local.end());
+    stable_sort(local.begin(), local.end());
 
     int num_samples = info.comm_size * info.comm_size;
     vector<uint_fast64_t> sample = copy_every_n(local, n / num_samples);
