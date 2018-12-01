@@ -6,7 +6,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
-% \usepackage{color}
+\usepackage{booktabs}
 \usepackage{subfigure}
 \usepackage{algorithm}
 \usepackage{algorithmicx}
@@ -88,7 +88,7 @@
 \title{
     \begin{center}
         \phantom{Start!}
-    	  \vspace{2cm}
+        \vspace{2cm}
         \center{\zihao{1} 中山大学数据科学与计算机学院}
         \center{\zihao{2} 《高性能程序设计基础》实验6}
         \center{（2018-2019学年秋季学期）}
@@ -102,11 +102,11 @@
     \zihao{-2}
     \center{
         \begin{tabular}{cc}
-      	学\qquad 号：& \underline{~~~~~~16337113~~~~~~}  \\
-      	姓\qquad 名：& \underline{~~~~~~~劳马东~~~~~~~}  \\
+        学\qquad 号：& \underline{~~~~~~16337113~~~~~~}  \\
+        姓\qquad 名：& \underline{~~~~~~~劳马东~~~~~~~}  \\
         教学班级：   & \underline{~~~~~教务2班~~~~~}  \\
-      	专\qquad 业：& \underline{~~~~~~~~~超算~~~~~~~~}  \\
-      	\end{tabular}
+        专\qquad 业：& \underline{~~~~~~~~~超算~~~~~~~~}  \\
+       \end{tabular}
     }
 \end{center}
 \pagebreak
@@ -197,15 +197,16 @@ vector<uint_fast64_t> divide_read_directly(istream& in,
 }
 \end{lstlisting}
 
-\begin{enumerate}[itemindent=4em,label=\arabic*、]
+\begin{enumerate}[itemindent=2.5em,label=\arabic*、]
 \item 本地数据排序
 \par \qquad 排序原则上采用任何排序算法都可以，但是由于数据量比较大，如果使用空间复杂度
 较大的算法（如快速排序和归并排序），就很容易超出内存限制，导致程序崩溃。因此，实验中使用
-了STL的stable\_sort，它使用桶排序算法对序列原地排序，并且时间复杂度是$O(n \log n)$。
+了STL的堆排序算法，时间复杂度是$O(n \log n)$，空间复杂度是$O(1)$。
 \item 按进程数p等间隔采样
 \par \qquad 每个进程从其局部有序序列中选取$p$个样本，因此总共有$p^2$个样本，取数间隔为$\frac{n}{p^2}$。
 \begin{lstlisting}[caption=排序与采样,label={code:local_sample},captionpos=b]
-stable_sort(local.begin(), local.end());
+make_heap(local.begin(), local.end());
+sort_heap(local.begin(), local.end());
   
 int num_samples = info.comm_size * info.comm_size;
 vector<uint_fast64_t> sample = copy_every_n(local, n / num_samples);
@@ -271,7 +272,7 @@ vector<vector<T>> divide_seg(const vector<T>& a, const vector<T>& d) {
 将p个段Gather给对应进程，并返回各个进程第i段的长度，用数组seg\_length记录，它的作用
 是在之后的归并排序中计算每个有序子段的范围。
 \begin{lstlisting}[caption=全交互,captionpos=b]
-vector<vector<uint_fast64_t>> local_blocks = divide(local, pivots);
+vector<vector<uint_fast64_t>> local_blocks = divide_seg(local, pivots);
 // 存储全交互结果
 vector<uint_fast64_t> local2;
 // 存储从各个进程收到的段长度
@@ -300,6 +301,95 @@ for (int j = 0; j < info.comm_size - 1; ++j) {
 \end{lstlisting}
 
 \section{实验结果及分析}
+程序并行运行时间如\tabref{tab:time}，随着问题规模的扩大，程序的运行时间也在增加。在同样问题规模下，
+随着核数的增加，程序的运行时间都是先减少后增加：当$n=2^{10}$时，最佳核数为4；当$n=2^{14}$时，最佳核数为8，
+\figref{fig:14time}给出了它的时间变化；当$n \geq 2^{18}$时，最佳核数为16，\figref{fig:26time}给出了$n=2^{26}$时程序运行时间的变化。
+为什么在$n \geq 2^{18}$之后，最佳核数固定为16呢？我认为，一方面是因为从16核到32核的跨度太大，
+也许最佳核数增加，只不过还是在16到32核；另一方面，核数增加带来的通信开销也是不可忽视的，不是说核数越多，
+程序运行时间就会减少。
 
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{c|cccccccc}
+        \toprule
+            & 1 & 2 & 4 & 8 & 16 & 32 & 64 & 112\\
+        \hline
+        10 & 0.0006 & 0.0005 & 0.0004 & 0.0008 & 0.0017 & 0.0845 & 0.1734 & 0.4256\\
+        14 & 0.0095 & 0.0058 & 0.0034 & 0.0026 & 0.0035 & 0.9617 & 2.1998 & 4.1106\\
+        18 & 0.1496 & 0.0836 & 0.052 & 0.0391 & 0.0234 & 1.0252 & 1.9063 & 4.5854\\
+        22 & 1.9337 & 1.1124 & 0.6785 & 0.4255 & 0.3026 & 1.6503 & 2.7839 & 5.1287\\
+        26 & 31.975 & 17.984 & 9.7174 & 5.5852 & 3.8148 & 8.6407 &16.445 & 31.124\\
+        30 & 574.91 & 328.01 & 178.36 & 108.74 & 72.627 & 111.56 & 207.94 & 385.34\\
+        31 & 1246.2 & 712.36 & 386.31 & 235.93 & 156.07 & 238.45 & 400.12 & 805.12\\
+        32 & 2482.6 & 1426.2 & 766.23 & 470.09 & 313.61 & 480.9 & 785.35 & 1521.6        \\
+        \bottomrule
+    \end{tabular}
+    \caption{运行时间} \label{tab:time}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \subfigure[$n=2^{14}$时间变化]{
+  \includegraphics[width=0.4\textwidth]{14time.png}
+  \label{fig:14time}}
+  \subfigure[$n=2^{26}$时间变化]{
+  \includegraphics[width=0.4\textwidth]{26time.png}
+  \label{fig:26time}}
+\end{figure}
+
+\par 加速比如\tabref{tab:speedup}。在元素个数不变的情况下，加速比的变化与并行运行时间变化相同；
+在核数不变时，随着问题规模的扩大，加速比先上升后下降，\figref{fig:speedup1}和\figref{fig:speedup2}
+直观地显示了这一趋势。结合加速比公式$S_p = \frac{1}{W_s+W_p / p}$，认为是当问题规模较小时，$n$的增大更充分地发挥了每个核的计算能力，使并行部分所占的比例增大；而当规模
+达到一定程度，超过每个核的计算能力，继续增大$n$就没法继续获得加速了。就像一个人1小时能做10道题，而现在
+只有3道题给他做，那这1小时他的速度就是3道题/h，而如果有8道题给他，他的速度就是8道题/h，但是要是给他20道题，
+他的速度也只能是10道题/h。
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{c|ccccccc}
+        \toprule
+        & 2 & 4 & 8 & 16 & 32 & 64 & 112\\
+        \hline
+        10 & 1.2 & 1.5 & 0.75 & 0.352941176 & 0.007100592 & 0.003460208 & 0.001409774\\
+        14 & 1.637931034 & 2.794117647 & 3.653846154 & 2.714285714 & 0.00987834 & 0.004318574 & 0.002311098\\
+        18 & 1.789473684 & 2.876923077 & 3.826086957 & 6.393162393 & 0.145922747 & 0.07847663 & 0.032625289\\
+        22 & 1.738313556 & 2.849963154 & 4.54453584 & 6.390284204 & 1.171726353 & 0.694601099 & 0.377035116\\
+        26 & 1.777969306 & 3.290489226 & 5.724951658 & 8.381828667 & 3.700510375 & 1.944359988 & 1.027342244\\
+        30 & 1.752720954 & 3.223312402 & 5.287014898 & 7.915926584 & 5.153370384 & 2.76478792 & 1.491955156\\
+        31 & 1.749396373 & 3.225906655 & 5.282075192 & 7.98487858 & 5.226252883 & 3.11456563 & 1.5478438\\
+        32 & 1.740709578 & 3.240019315 & 5.281116382 & 7.916201652 & 5.162403826 & 3.161138346 & 1.631572029        \\
+        \bottomrule
+    \end{tabular}
+    \caption{加速比} \label{tab:speedup}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \subfigure[加速比1]{
+    \includegraphics[width=0.4\textwidth]{speedup1.png}
+    \label{fig:speedup1}}
+    \subfigure[加速比2]{
+    \includegraphics[width=0.4\textwidth]{speedup2.png}
+    \label{fig:speedup2}}
+\end{figure}
+
+\par 在问题规模一定时，效率随着核数的增加而降低；核数一定时，效率与加速比的变化趋势一致，先升后降。
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{c|ccccccc}
+        \toprule
+        & 2 & 4 & 8 & 16 & 32 & 64 & 112\\
+        \hline
+        10 & 60 & 37.5 & 9.375 & 2.205882353 & 0.022189349 & 0.005406574 & 0.001258727\\
+        14 & 81.89655172 & 69.85294118 & 45.67307692 & 16.96428571 & 0.030869814 & 0.006747773 & 0.00206348\\
+        18 & 89.47368421 & 71.92307692 & 47.82608696 & 39.95726496 & 0.456008584 & 0.122619735 & 0.029129722\\
+        22 & 86.91567781 & 71.24907885 & 56.806698 & 39.93927627 & 3.661644852 & 1.085314217 & 0.336638497\\
+        26 & 88.8984653 & 82.26223064 & 71.56189572 & 52.38642917 & 11.56409492 & 3.038062481 & 0.917269861\\
+        30 & 87.63604768 & 80.58281005 & 66.08768622 & 49.47454115 & 16.10428245 & 4.319981124 & 1.332102818\\
+        31 & 87.46981863 & 80.64766638 & 66.0259399 & 49.90549113 & 16.33204026 & 4.866508797 & 1.382003393\\
+        32 & 87.03547889 & 81.00048288 & 66.01395477 & 49.47626032 & 16.13251196 & 4.939278666 & 1.456760741\\
+        \bottomrule
+    \end{tabular}
+    \caption{效率} \label{tab:speedup}
+\end{table}
 
 \end{document}
