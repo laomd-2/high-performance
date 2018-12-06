@@ -5,15 +5,9 @@
 #include <thrust/host_vector.h>
 #include <thrust/device_vector.h>
 #include <iostream>
+#include "../util.h"
 
 using namespace std;
-
-template <typename T, typename Alloc = std::allocator<T>>
-ostream& operator<< (ostream& out, const thrust::detail::vector_base<T, Alloc>& a) {
-    for (const auto& i: a)
-        out << i << ' ';
-    return out;
-}
 
 int main() {
     thrust::host_vector<int> h(4);

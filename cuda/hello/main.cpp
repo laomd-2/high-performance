@@ -3,15 +3,10 @@
 //
 
 #include <cuda_runtime.h>
+#include <iostream>
 #include <cstdio>
+#include "../util.h"
 using namespace std;
-
-__device__ int getGlobalIdx_2D_2D()
-{
-    int blockId = blockIdx.x + blockIdx.y * gridDim.x;
-    int threadId = blockId * (blockDim.x * blockDim.y) + (threadIdx.y * blockDim.x) + threadIdx.x;
-    return threadId;
-}
 
 __global__ void hello() {
     int global_tid = getGlobalIdx_2D_2D();
@@ -22,5 +17,4 @@ int main() {
 
     freopen("hello.txt","w",stdout);
     hello<<<grid_dim, block_dim>>>();
-    cudaDeviceReset();
 }
