@@ -6,18 +6,26 @@
 #include <thrust/device_vector.h>
 #include <iostream>
 
-using namespace thrust;
 using namespace std;
 
+template <typename T, typename Alloc = std::allocator<T>>
+ostream& operator<< (ostream& out, const thrust::detail::vector_base<T, Alloc>& a) {
+    for (const auto& i: a)
+        out << i << ' ';
+    return out;
+}
+
 int main() {
-    host_vector<int> h(4);
+    thrust::host_vector<int> h(4);
     for (int i = 0; i < h.size(); ++i) {
         h[i] = i;
     }
 
-    device_vector<int> d(h);
-    for (auto i: d)
-        cout << i << ' ';
-    cout << endl;
+    thrust::device_vector<int> d(h);
+    cout << d << endl;
+
+    thrust::device_vector<int> d2(10, 1);
+    thrust::fill(d2.begin(), d2.begin() + 5, 2);
+    cout << d2 << endl;
     return 0;
 }
