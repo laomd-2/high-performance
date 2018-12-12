@@ -6,35 +6,42 @@
 #include <thrust/device_vector.h>
 #include <cmath>
 #include <ctime>
-#include "../util.h"
+#include "../util.cuh"
 
 typedef thrust::device_vector<double> DVector1D;
 
+__device__ void cal_one_ele(size_t i, size_t j, size_t n, double* P) {
+    double sum = 0;
+    for (int k = 0; k < n; ++k) {
+        double a_ik = i - 0.1 * k + 1, b_kj = 0.2 * j - 0.1 * k;
+        sum += a_ik * b_kj;
+    }
+    *(P + i * n + j) = sum;
+}
+
 __global__ void matrix_mul_kernel(double* P, unsigned n) {
-    size_t thread_n = gridDim.x * blockDim.x;
-    size_t matrix_block_n = n / thread_n;
+    size_t n_per_block = n / gridDim.x;
+    size_t n_per_thread = n_per_block / blockDim.x;
 
-    size_t tid = getGlobalIdx_2D_2D();
-    size_t i = tid / thread_n, j = tid % thread_n;
-
-    size_t i_base = i * matrix_block_n;
-    size_t j_base = j * matrix_block_n;
-    for (i = 0; i < matrix_block_n; ++i, ++i_base) {
-        size_t real_j = j_base;
-        for (j = 0; j < matrix_block_n; ++j, ++real_j) {
-            double sum = 0;
-            for (int k = 0; k < n; ++k) {
-                double a_ik = i_base - 0.1 * k + 1, b_kj = 0.2 * real_j - 0.1 * k;
-                sum += a_ik * b_kj;
-            }
-            *(P + i_base * n + real_j) = sum;
+    size_t block_i = blockIdx.y * n_per_block,
+           block_j = blockIdx.x * n_per_block;
+    size_t thread_i = block_i + threadIdx.y * n_per_thread,
+           thread_j = block_j + threadIdx.x * n_per_thread;
+    for (int i = 0; i < n_per_thread; ++i) {
+        size_t ii = thread_i + i;
+        for (int j = 0; j < n_per_thread; ++j) {
+            cal_one_ele(ii, thread_j + j, n, P);
         }
     }
 }
 
-int main() {
-    unsigned n = 5000;
-    dim3 grid_dim(25, 25), block_dim(10, 10);
+int main(int argc, const char* argv[]) {
+    if (argc < 4)
+        return 1;
+    int n = stoi(argv[1]);
+    int g_n = stoi(argv[2]);
+    int tile_n = stoi(argv[3]);
+    dim3 grid_dim(g_n, g_n), block_dim(tile_n, tile_n);
     DVector1D result(n * n, 0);
 
     float elapsed=0;
@@ -53,6 +60,7 @@ int main() {
     cudaEventDestroy(stop);
 
     cout << elapsed / 1000.0 << 's' << endl;
-//    cout << result << endl;
+    if (argc > 4)
+        cout << result << endl;
     return 0;
 }

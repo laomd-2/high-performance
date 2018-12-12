@@ -5,7 +5,7 @@
 #include <cuda_runtime.h>
 #include <iostream>
 #include <cstdio>
-#include "../util.h"
+#include "../util.cuh"
 using namespace std;
 
 __global__ void hello() {

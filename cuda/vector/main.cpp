@@ -5,7 +5,7 @@
 #include <thrust/host_vector.h>
 #include <thrust/device_vector.h>
 #include <iostream>
-#include "../util.h"
+#include "../util.cuh"
 
 using namespace std;
 
