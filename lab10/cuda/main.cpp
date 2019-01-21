@@ -16,14 +16,14 @@ using namespace std;
 #endif
 
 #define FULL_MASK 0xffffffff
-#define nWarps 1
+#define nWarps 2
 
 __global__ void kernel_multiply(const float* a_data, const int* r1, const int* c1,
                                 const float* b_data, const int* r2, const int* c2) {
     __shared__ float sValA[nWarps];
     __shared__ int sColA[nWarps];
 
-//    int blockId = blockIdx.x;
+    int blockId = blockIdx.x;
     int warpId = threadIdx.x / WARP_SIZE;
     int laneId = threadIdx.x % WARP_SIZE;
 
@@ -35,10 +35,10 @@ __global__ void kernel_multiply(const float* a_data, const int* r1, const int* c
     int bColIt, bColEnd;
     int colB;
     float valB;
-    __shared__ float result_row[WARP_SIZE][WARP_SIZE];
+    __shared__ float result_row[nWarps][WARP_SIZE][WARP_SIZE];
 
     for (int j = 0; j < WARP_SIZE; ++j) {
-        result_row[j][laneId] = 0;
+        result_row[warpId][j][laneId] = 0;
     }
 
     for(int k = 0, end = __popc(__ballot_sync(FULL_MASK, aColIt < aColEnd)); k < end; ++k)
@@ -56,15 +56,15 @@ __global__ void kernel_multiply(const float* a_data, const int* r1, const int* c
             colB = bColIt < bColEnd ? c2[bColIt] : 0;
             valB = bColIt < bColEnd ? b_data[bColIt] : 0.0f;
         }
-        result_row[colB][laneId] += sValA[warpId] * valB;       // 避免bank conflict
+        result_row[warpId][colB][laneId] += sValA[warpId] * valB;       // 避免bank conflict
     }
     for (int i = 1; i < WARP_SIZE; ++i) {    // 避免bank conflict
-        result_row[laneId][laneId] += result_row[laneId][((i + laneId) & (WARP_SIZE - 1))];
+        result_row[warpId][laneId][laneId] += result_row[warpId][laneId][((i + laneId) & (WARP_SIZE - 1))];
 //        printf("(%d %d %lf) ", warpId, i, result_row[i]);
 //        if (laneId == 0)
 //            printf("\n");
     }
-    printf("%d %d %lf\n", warpId, laneId, result_row[laneId][laneId]);
+    printf("%d %d %lf\n", warpId, laneId, result_row[warpId][laneId][laneId]);
 }
 
 int main(int argc, const char* argv[]) {
@@ -87,7 +87,7 @@ int main(int argc, const char* argv[]) {
 
     DeviceCsrSpMat a(mata), b(matb);
 
-    kernel_multiply<<<1, 32>>>(a.data, a.row_indices, a.col_indices,
+    kernel_multiply<<<1, nWarps * WARP_SIZE>>>(a.data, a.row_indices, a.col_indices,
             b.data, b.row_indices, b.col_indices);
     cudaDeviceReset();
 }
