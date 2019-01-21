@@ -35,7 +35,11 @@ __global__ void kernel_multiply(const float* a_data, const int* r1, const int* c
     int bColIt, bColEnd;
     int colB;
     float valB;
-    float result_row[WARP_SIZE];
+    __shared__ float result_row[WARP_SIZE][WARP_SIZE];
+
+    for (int j = 0; j < WARP_SIZE; ++j) {
+        result_row[j][laneId] = 0;
+    }
 
     for(int k = 0, end = __popc(__ballot_sync(FULL_MASK, aColIt < aColEnd)); k < end; ++k)
     {
@@ -52,20 +56,15 @@ __global__ void kernel_multiply(const float* a_data, const int* r1, const int* c
             colB = bColIt < bColEnd ? c2[bColIt] : 0;
             valB = bColIt < bColEnd ? b_data[bColIt] : 0.0f;
         }
-        result_row[colB] += sValA[warpId] * valB;       // 避免bank conflict
+        result_row[colB][laneId] += sValA[warpId] * valB;       // 避免bank conflict
     }
-    for (int i = 0; i < WARP_SIZE; ++i) {
-        printf("(%d %lf) ", i, result_row[i]);
-        if (laneId == 0)
-            printf("\n");
+    for (int i = 1; i < WARP_SIZE; ++i) {    // 避免bank conflict
+        result_row[laneId][laneId] += result_row[laneId][((i + laneId) & (WARP_SIZE - 1))];
+//        printf("(%d %d %lf) ", warpId, i, result_row[i]);
+//        if (laneId == 0)
+//            printf("\n");
     }
-//    for (int i = 1; i < WARP_SIZE; ++i) {    // 避免bank conflict
-//        result_row[laneId][laneId] += result_row[laneId][((i + laneId) & (WARP_SIZE - 1))];
-////        printf("(%d %d %lf) ", warpId, i, result_row[i]);
-////        if (laneId == 0)
-////            printf("\n");
-//    }
-//    printf("%d %d %lf\n", warpId, laneId, result_row[laneId][laneId]);
+    printf("%d %d %lf\n", warpId, laneId, result_row[laneId][laneId]);
 }
 
 int main(int argc, const char* argv[]) {
