@@ -9,6 +9,7 @@
 #include <vector>
 using namespace std;
 
+
 class Communicator {
     const MPI_Comm _comm;
     int comm_size{}, _rank{};
