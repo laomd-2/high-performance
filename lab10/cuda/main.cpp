@@ -16,7 +16,7 @@ using namespace std;
 #endif
 
 #define FULL_MASK 0xffffffff
-#define nWarps 2
+#define nWarps 8
 
 __global__ void kernel_multiply(const float* a_data, const int* r1, const int* c1,
                                 const float* b_data, const int* r2, const int* c2) {
@@ -58,13 +58,13 @@ __global__ void kernel_multiply(const float* a_data, const int* r1, const int* c
         }
         result_row[warpId][colB][laneId] += sValA[warpId] * valB;       // 避免bank conflict
     }
-    for (int i = 1; i < WARP_SIZE; ++i) {    // 避免bank conflict
+    for (int i = 1; i < WARP_SIZE; ++i)    // 避免bank conflict
         result_row[warpId][laneId][laneId] += result_row[warpId][laneId][((i + laneId) & (WARP_SIZE - 1))];
-//        printf("(%d %d %lf) ", warpId, i, result_row[i]);
-//        if (laneId == 0)
-//            printf("\n");
-    }
-    printf("%d %d %lf\n", warpId, laneId, result_row[warpId][laneId][laneId]);
+    valA = result_row[warpId][laneId][laneId];
+    if (valA)
+        printf("%d %d %lf\n", warpId, laneId, valA);
+    if (laneId == 0)
+        printf("\n");
 }
 
 int main(int argc, const char* argv[]) {
