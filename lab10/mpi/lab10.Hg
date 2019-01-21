@@ -1,0 +1,6 @@
+#PBS -N mpi.Hg
+#PBS -l nodes=2:ppn=56
+#PBS -q students
+
+#cd $PBS_O_WORKDIR 
+for i in 1024 2048 4096; do for j in 4 16 64; do mpirun --allow-run-as-root -n $j ./a.out $i; done; done

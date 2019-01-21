@@ -47,6 +47,14 @@ public:
     }
 
     template <typename T>
+    vector<T> scatter(vector<T>&& global, int n_per, MPI_Datatype datatype, int root) const {
+        bcast_c(&n_per, 1, MPI_INT, root);
+        vector<T> local(n_per);
+        MPI_Scatter(global.data(), n_per, datatype, local.data(), n_per, datatype, root, _comm);
+        return local;
+    }
+
+    template <typename T>
     vector<T> scatterv(vector<T>&& global, const vector<int>& sendcounts, MPI_Datatype datatype, int root) const {
         int n;
         MPI_Scatter(sendcounts.data(), 1, MPI_INT, &n, 1, datatype, root, _comm);

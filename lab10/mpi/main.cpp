@@ -9,6 +9,7 @@
 #include "mympi.h"
 #include "mpi4cxx.hpp"
 #include "cannon.h"
+#include "csr_cannon.h"
 using namespace std;
 
 

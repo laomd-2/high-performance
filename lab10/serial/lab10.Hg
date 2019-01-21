@@ -1,0 +1,6 @@
+#PBS -N serial.Hg
+#PBS -l nodes=1:ppn=1
+#PBS -q students
+
+cd $PBS_O_WORKDIR 
+for i in 1024 2048 4096; do ./a.out $i; done
