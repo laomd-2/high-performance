@@ -12,13 +12,12 @@ def output(matrix):
 
 if __name__ == '__main__':
     m1 = n1 = 1024*8
-    m2 = n2 = 128
+    m2 = n2 = 1024
     matrix: scipy.sparse.csr_matrix = scipy.sparse.rand(m2, n2, 0.1, 'csr', float, random_state=0)
     matrixb: scipy.sparse.csr_matrix = scipy.sparse.rand(m2, n2, 0.1, 'csr', float, random_state=1)
-    # print(matrix[0])
-    print((matrix * matrixb).toarray()[m2-1])
-    # print((matrix * matrixb).toarray()[0])
-    # nonzero = matrix.nonzero()
+    print((matrix * matrixb).getrow(0))
+    # which = matrixb
+    # nonzero = which.nonzero()
     # cnt = Counter()
     # for row in nonzero[0]:
     #     cnt[row] += 1
@@ -30,7 +29,7 @@ if __name__ == '__main__':
     # row_indices.append(len(nonzero[1]) + 1)
     # with open('csr_sparse' + str(m2) + '-2.mtx', 'w') as out:
     #     print(len(row_indices) - 1, len(nonzero[0]), file=out)
-    #     for x in matrix.data:
+    #     for x in which.data:
     #         print('%.6f' % x, end=' ', file=out)
     #     print(file=out)
     #     for x in nonzero[1]:
