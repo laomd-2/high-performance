@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <cmath>
 #include <cuda_runtime.h>
 #include "csrspmat.h"
 //#include "../util.cuh"
@@ -16,10 +18,13 @@ using namespace std;
 #define N 32
 #endif
 
-#ifndef nWarps
-//#define nWarps ((48 * 1024) / (N + 2))
-#define nWarps 2
+#if (12 * 1024 / (N + 2) > 16)
+#define nWarps 16
+#else
+#define nWarps (((12 * 1024) / (N + 2)))
 #endif
+
+//#define nWarps 2
 
 __global__ void kernel_multiply(const float* a_data, const int* r1, const int* c1,
                                 const float* b_data, const int* r2, const int* c2) {
@@ -63,7 +68,7 @@ __global__ void kernel_multiply(const float* a_data, const int* r1, const int* c
         }
     }
 
-    if (globalWarpId == nWarps - 1) {
+    if (globalWarpId == N - 1) {
         for (int i = laneId; i < N; i += warpSize)
             printf("(%d %d %lf) ", globalWarpId, i, result_row[warpId][i]);
     }
@@ -89,7 +94,8 @@ int main() {
 
     DeviceCsrSpMat a(mata), b(matb);
 
-    kernel_multiply<<<1, nWarps * 32>>>(a.data, a.row_indices, a.col_indices,
+    int blocks = ceil((float)N / nWarps);
+    kernel_multiply<<<blocks, nWarps * 32>>>(a.data, a.row_indices, a.col_indices,
             b.data, b.row_indices, b.col_indices);
     cudaDeviceReset();
 }

@@ -12,11 +12,11 @@ def output(matrix):
 
 if __name__ == '__main__':
     m1 = n1 = 1024*8
-    m2 = n2 = 32
+    m2 = n2 = 128
     matrix: scipy.sparse.csr_matrix = scipy.sparse.rand(m2, n2, 0.1, 'csr', float, random_state=0)
     matrixb: scipy.sparse.csr_matrix = scipy.sparse.rand(m2, n2, 0.1, 'csr', float, random_state=1)
     # print(matrix[0])
-    print((matrix * matrixb).toarray()[31])
+    print((matrix * matrixb).toarray()[m2-1])
     # print((matrix * matrixb).toarray()[0])
     # nonzero = matrix.nonzero()
     # cnt = Counter()

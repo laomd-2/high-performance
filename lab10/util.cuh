@@ -15,7 +15,7 @@ using namespace std;
 #ifdef __JETBRAINS_IDE__
 dim3 gridDim, blockDim;
 dim3 threadIdx, blockIdx;
-#define WARP_SIZE 32
+#define warpSize 32
 #define __popc(a) (a)
 #define __ballot(a) (a)
 #define __any(a) (a)
