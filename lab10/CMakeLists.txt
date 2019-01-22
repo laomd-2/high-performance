@@ -9,6 +9,8 @@ link_directories("D:/Program Files (x86)/Microsoft SDKs/MPI/Lib/x64")
 
 add_executable(serial serial/main.cpp)
 add_executable(cuda cuda/main.cpp)
-add_executable(p_mpi mpi/main.cpp)
+add_executable(cannon mpi/cannon.cpp)
+add_executable(dns mpi/dns.cpp)
 
-target_link_libraries(p_mpi msmpi)
+target_link_libraries(cannon msmpi)
+target_link_libraries(dns msmpi)

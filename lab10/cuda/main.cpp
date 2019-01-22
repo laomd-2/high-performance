@@ -9,13 +9,13 @@
 #include <algorithm>
 #include <cmath>
 #include <cuda_runtime.h>
-#include "csrspmat.h"
-//#include "../util.cuh"
+#include "device_csrspmat.h"
+#include "util.cuh"
 using namespace std;
 #define FULL_MASK 0xffffffff
 
 #ifndef N
-#define N 32
+#define N 32768
 #endif
 
 #define nWarps 16
@@ -72,8 +72,6 @@ __global__ void kernel_multiply(const float* a_data, const int* r1, const int* c
 }
 
 int main() {
-    cudaDeviceReset();
-
     string filebase = "../data/csr_sparse";
     string file1 = filebase + to_string(N) + ".mtx";
     string file2 = filebase + to_string(N) + "-2.mtx";
@@ -88,8 +86,8 @@ int main() {
     fin >> matb;
     fin.close();
 
-//    cout << mata;
-
+    float elapsed;
+    TIMER_START;
     DeviceCsrSpMat a(mata), b(matb);
 
     float* result;
@@ -97,15 +95,9 @@ int main() {
 
     kernel_multiply<<<N / nWarps, nWarps * 32>>>(a.data, a.row_indices, a.col_indices,
             b.data, b.row_indices, b.col_indices, result);
-    float *host_res = new float[N * N];
+    auto *host_res = new float[N * N];
     cudaMemcpy(host_res, result, N * N * sizeof(float), cudaMemcpyDeviceToHost);
 
-    int row = 0;
-    for (int i = 0; i < N; ++i) {
-        float x = host_res[row* N + i];
-        if (x != 0.0f)
-            printf("(%d %d %lf) ", row, i, x);
-    }
-    printf("\n");
-    cudaDeviceReset();
+    TIMER_END(elapsed);
+    cout << N << ',' << elapsed / 1000 << endl;
 }

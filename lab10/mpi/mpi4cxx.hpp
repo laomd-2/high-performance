@@ -42,6 +42,23 @@ public:
     }
 
     template <typename T>
+    void recv(vector<T>& recvbuff, MPI_Datatype datatype, int source, int recvtag, MPI_Status* status) const {
+        int recvcount;
+        MPI_Recv(&recvcount, 1, MPI_INT, source, recvtag,
+                     _comm, MPI_STATUS_IGNORE);
+        recvbuff.resize(recvcount);
+        MPI_Recv(recvbuff.data(), recvcount, datatype, source, recvtag, _comm, status);
+    }
+
+    template <typename T>
+    void send(const vector<T>& sendbuff, MPI_Datatype datatype, int dest, int sendtag) const {
+        int sendcount = sendbuff.size();
+        MPI_Send(&sendcount, 1, MPI_INT, dest, sendtag,
+                 _comm);
+        MPI_Send(sendbuff.data(), sendcount, datatype, dest, sendtag, _comm);
+    }
+
+    template <typename T>
     void bcast_c(T* buffer, int n, MPI_Datatype datatype, int root) const {
         MPI_Bcast(buffer, n, datatype, root, _comm);
     }
@@ -75,26 +92,27 @@ public:
         MPI_Barrier(_comm);
     }
 
-    Communicator cart_create() const {
+    Communicator cart_create(int dim=2) const {
         MPI_Comm comm_cart;
 
-        int dims[2] = {0, 0};
-        MPI_Dims_create(comm_size, 2, dims);
-        int periods[2] = {0, 0};
-        MPI_Cart_create(_comm, 2, dims, periods, 0, &comm_cart);
+        vector<int> dims(dim, 0), periods(dim, 0);
+        MPI_Dims_create(comm_size, dim, dims.data());
+        MPI_Cart_create(_comm, dim, dims.data(), periods.data(), 0, &comm_cart);
         return Communicator(comm_cart);
     }
 
-    pair<Communicator, Communicator> cart_2d_sub() const {
-        MPI_Comm comm_row, comm_col;
+    vector<Communicator> cart_sub(int dim=2) const {
+        vector<MPI_Comm> res(dim);
 
-        int remain_dims[2] = {0, 1};
-        MPI_Cart_sub(_comm, remain_dims, &comm_row);
+        vector<int> remain_dims(dim, 0);
         remain_dims[0] = 1;
-        remain_dims[1] = 0;
-        MPI_Cart_sub(_comm, remain_dims, &comm_col);
-
-        return make_pair(Communicator(comm_row), Communicator(comm_col));
+        MPI_Cart_sub(_comm, remain_dims.data(), res.data());
+        for (int i = 1; i < dim; ++i) {
+            remain_dims[i] = 1;
+            remain_dims[i - 1] = 0;
+            MPI_Cart_sub(_comm, remain_dims.data(), res.data() + i);
+        }
+        return vector<Communicator>(res.begin(), res.end());
     }
 
     void cart_shift(int dimension, int offset) const {

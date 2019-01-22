@@ -9,7 +9,7 @@
 #include <map>
 #include "mpi4cxx.hpp"
 #include "mympi.h"
-#include "spmat.h"
+#include "triple_mat.h"
 using namespace std;
 
 void matrix_scatter(SpMat &matrix, Communicator row_comm, Communicator col_comm) {
