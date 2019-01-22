@@ -12,10 +12,22 @@ def output(matrix):
 
 if __name__ == '__main__':
     m1 = n1 = 1024*8
-    m2 = n2 = 1024
-    matrix: scipy.sparse.csr_matrix = scipy.sparse.rand(m2, n2, 0.1, 'csr', float, random_state=0)
-    matrixb: scipy.sparse.csr_matrix = scipy.sparse.rand(m2, n2, 0.1, 'csr', float, random_state=1)
+    m2 = n2 = 2048
+    matrix: scipy.sparse.csr_matrix = scipy.sparse.rand(m2, n2, 0.0015, 'csr', float, random_state=0)
+    matrixb: scipy.sparse.csr_matrix = scipy.sparse.rand(m2, n2, 0.0015, 'csr', float, random_state=1)
+
+    row, col = 0, 0
     print((matrix * matrixb).getrow(0))
+
+    # i = 0
+    # for x, y in zip(matrix.getrow(row).toarray()[0], matrixb.getcol(col).toarray()[:, 0]):
+    #     if x != 0 and y != 0:
+    #         print(i, x, y)
+    #     i += 1
+    # res = ((matrix * matrixb).toarray()[0])
+    # for i, x in enumerate(res):
+    #     if x != 0:
+    #         print(0, i, x)
     # which = matrixb
     # nonzero = which.nonzero()
     # cnt = Counter()

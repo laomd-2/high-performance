@@ -39,7 +39,7 @@ __global__ void kernel_multiply(const float* a_data, const int* r1, const int* c
     int aColEnd = r1[globalWarpId + 1];
     int n_per_t = N / warpSize;
     for (int i = 0; i < n_per_t; ++i) {
-        int aColIt = r1[globalWarpId] + laneId * n_per_t + i;
+        int aColIt = r1[globalWarpId] + laneId + i * warpSize;
 
         int colA = aColIt < aColEnd ? c1[aColIt] : -1;
         float valA = aColIt < aColEnd ? a_data[aColIt] : 0.0f;
@@ -59,15 +59,11 @@ __global__ void kernel_multiply(const float* a_data, const int* r1, const int* c
             bColIt = r2[sColA[warpId]] + laneId; // sColA is volatile and warp’s threads
             bColEnd = r2[sColA[warpId] + 1]; // are implicitly synchronized
 
-            colB = -1;
-            valB = 0.0f;
             for(; __any(bColIt < bColEnd ); bColIt += warpSize) {
                 colB = bColIt < bColEnd ? c2[bColIt] : -1;
                 valB = bColIt < bColEnd ? b_data[bColIt] : 0.0f;
                 if (colB > -1) {
                     result[globalWarpId * N + colB] += sValA[warpId] * valB;       // colB必不同，避免bank conflict
-                    if (globalWarpId == 0 && colB == 0)
-                        printf("(%d %lf %d %lf)\n", sColA[warpId], sValA[warpId], colB, valB);
                 }
             }
             __syncthreads();
@@ -105,8 +101,11 @@ int main() {
     cudaMemcpy(host_res, result, N * N * sizeof(float), cudaMemcpyDeviceToHost);
 
     int row = 0;
-    for (int i = 0; i < N; ++i)
-        printf("(%d %d %lf) ", row, i, host_res[row* N + i]);
+    for (int i = 0; i < N; ++i) {
+        float x = host_res[row* N + i];
+        if (x != 0.0f)
+            printf("(%d %d %lf) ", row, i, x);
+    }
     printf("\n");
     cudaDeviceReset();
 }
