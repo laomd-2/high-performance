@@ -4,20 +4,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "mpi4cxx.hpp"
-#include "../common/csrspmat.h"
-
-HostCsrSpMat read_sub_matrix(const string &file, Communicator comm1, Communicator comm2) {
-    int i = comm1.rank(), j = comm2.rank();
-
-    HostCsrSpMat mat;
-    ifstream fin(file);
-    fin >> mat;
-
-    int n_per = mat.n / comm1.size();
-    int row_first = i * n_per, col_first = j * n_per;
-    return mat.take(row_first, col_first, n_per);
-}
+#include "csr_io.h"
 
 // MPI树形归约
 void mat_reduce_add(HostCsrSpMat& mat, Communicator comm) {
